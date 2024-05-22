@@ -4,6 +4,11 @@ const server = 'http://localhost:8080/radios/';
 // pobranie z html diva o klasie .table gdzie wrzuca sie tabela
 const table = document.querySelector('.table');
 
+// aktualnie zaznaczone row'y
+// gdyz tabela co 10s sie odswieza dlatego trzeba zapisac co bylo
+// klikniete
+let selectedRows = [];
+
 // pobieranie danych z API
 const getData = async (url) => {
     try {
@@ -31,44 +36,69 @@ const loop = async () => {
     // pobranie danych 
     let data = await getData(server);
 
-    // dodawanie tabeli do html'a
-    table.innerHTML = tableGenerator(data)
-    markersGenerator(data);
+    // dodawanie tabeli do html'a 
+    table.innerHTML = tableGenerator(data, selectedRows)
+
+    let tableRows = document.querySelectorAll('.tableRow');
+
+
+
+
+    tableRows.forEach(element => {
+        element.addEventListener('click', () => {
+            console.log(selectedRows);
+            
+            // po kliknieciu jest dodawana klasa selected do rowa tabeli i do 
+            // tablicy selectedRows jest dodawany id row'a
+            // a jesli row juz zawiera selected to zostaje usuniety z row'a i arraya
+            if(element.classList.contains("selected")){
+                element.classList.remove('selected')
+                //usuniecie z selectedRows danego id
+                selectedRows[0] = -1;
+
+            }else{
+                // u
+                tableRows.forEach( row => {
+                    if(row.classList.contains("selected")){
+                        row.classList.remove("selected")
+                    }
+                })
+                element.classList.add('selected')
+                selectedRows[0] = element.id;
+            
+
+            }
+        })
+    })
+
 
 };
 
-// pierwsze wywolanie aby nie czekac 10s
-loop();
+loop()
 
 // Odswiezanie loopa
 const intervalId = setInterval(loop, 10000)
 
-
-
-
-    //przed wykonaniem pętli, usuwamy wszystkie markery
-var markerArray = [];
-
 const markersGenerator = (data, selectedRows) => {
-        let type = '';
-        data.forEach( row => {
-            switch(element.Type){
-                case "Portable":
-                    markerArray.push(addMarker(markerPosition, portableIcon))
-                    break
-                case "Car":
-                    markerArray.push(addMarker(markerPosition, carIcon))
-                    break
-                case "BaseStation":
-                    markerArray.push(addMarker(markerPosition, baseStationIcon))
-                    break
-                default:
-                    markerArray.push(addMarkerGeneric(markerPosition))
+    let type = '';
+    data.forEach( row => {
+        switch(element.Type){
+            case "Portable":
+                type = 'images/Portable.png'
                 break
+            case "Car":
+                type = 'images/Car.png'
+                break
+            case "BaseStation":
+                type = "images/BaseStation.png";
+                break
+            default:
+                type = "images/Unknown.png"
+            break
         }
     })
 }
-const tableGenerator = (data) => {
+const tableGenerator = (data, selectedRows) => {
     // id wierszy tabeli
     let deviceId = 0;
 
@@ -92,6 +122,19 @@ const tableGenerator = (data) => {
 
     // petla for po pobranym obiekcie z danymi
     data.forEach(element => {
+
+        // jestli ponizszy warunek sie sprawdzi
+        // selected przyjmie wartosc "seleted"
+        // przez co taka klasa doda sie do wiersza tabeli
+
+        let selected = ''
+        
+        selectedRows.forEach( row => {
+            if(row == deviceId){
+                selected = "selected";
+            } 
+        })
+
         
         // w tych zmiennych jest ustalana sciezka do odpowiedniego obrazka
         let type = '';
@@ -129,16 +172,22 @@ const tableGenerator = (data) => {
             strength = 'images/Strength0.png';
         }
 
-        if(element.BatteryLevel > 0 && element.BatteryLevel < 25){
-            batteryLevel = 'images/Battery1.png'
-        }else if(element.BatteryLevel >= 25 && element.BatteryLevel < 50){
-            batteryLevel = 'images/Battery2.png'
-        }else if(element.BatteryLevel >= 50 && element.BatteryLevel < 75){
-            batteryLevel = 'images/Battery3.png'
-        }else if(element.BatteryLevel >= 75){
-            batteryLevel = 'images/Battery4.png'
+        if(element.BatteryLevel > 0 && element.BatteryLevel < 5){
+            batteryLevel = 'images/bateria1.png'
+        }else if(element.BatteryLevel >= 5 && element.BatteryLevel < 10){
+            batteryLevel = 'images/bateria2.png'
+        }else if(element.BatteryLevel >= 10 && element.BatteryLevel < 20){
+            batteryLevel = 'images/bateria3.png'
+        }else if(element.BatteryLevel >= 20 && element.BatteryLevel < 40){
+            batteryLevel = 'images/bateria4.png'
+        }else if(element.BatteryLevel >= 40 && element.BatteryLevel < 60){
+            batteryLevel = 'images/bateria5.png'
+        }else if(element.BatteryLevel >= 60 && element.BatteryLevel < 90){
+            batteryLevel = 'images/bateria6.png'
+        }else if(element.BatteryLevel >= 90){
+            batteryLevel = 'images/bateria7.png'
         }else{
-            batteryLevel = 'images/Battery0.png'
+            batteryLevel = 'images/bateria1.png'
         }
 
         switch(element.WorkingMode){
@@ -157,14 +206,14 @@ const tableGenerator = (data) => {
 
         // dodawanie kolejnych wierszy do tabeli
         html += `
-            <tr id='deviceId ` + deviceId + `'>
+            <tr id='` + deviceId + `' class='tableRow ` + selected +`'>
                 <td>` + element.Id + `</td>
                 <td>` + element.Name + `</td>
-                <td><img scr='` + type + `'/></td>
+                <td><img src='` + type + `'/></td>
                 <td>` + element.SerialNumber + `</td>
-                <td><img scr='` + strength + `'/></td>
-                <td><img scr='` + batteryLevel + `'/></td>
-                <td><img scr='` + workingMode + `'/></td>
+                <td><img src='` + strength + `'/></td>
+                <td><img src='` + batteryLevel + `'/></td>
+                <td><img src='` + workingMode + `'/></td>
                 <td>` + element.Position.Lat + `</td>
                 <td>` + element.Position.Lon + `</td>
             </tr>
