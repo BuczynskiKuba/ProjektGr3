@@ -1,5 +1,5 @@
 // Initialize the map
-var map = L.map('map').setView([50.0485, 19.90791], 13); // Example coordinates
+var map = L.map('map').setView([50.0276, 19.9821], 11); // Example coordinates
 // Add tile layer
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

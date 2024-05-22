@@ -73,7 +73,8 @@ const loop = async () => {
 loop()
 
 // Odswiezanie loopa
-const intervalId = setInterval(loop, 10000)
+const intervalId = setInterval(loop, 5000)
+
 const clearMarkers = () => {
     markers.forEach(function(marker) {
         map.removeLayer(marker);
@@ -160,15 +161,15 @@ const tableGenerator = (data, selectedRows) => {
         // addMarkerGeneric(markerPosition)
         
         if( element.Strength > 0 && element.Strength < 3){
-            strength = '../res/icons/strength/strength2.png'
+            strength = '../res/icons/strength/strenth2.png'
         }else if( element.Strength >= 3 && element.Strength < 5){
-            strength = '../res/icons/strength/strength3.png';
+            strength = '../res/icons/strength/strenth3.png';
         }else if( element.Strength >= 5 && element.Strength < 7){
-            strength = '../res/icons/strength/strength4.png';
+            strength = '../res/icons/strength/strenth4.png';
         }else if( element.Strength >= 7){
-            strength = '../res/icons/strength/strength5.png';
+            strength = '../res/icons/strength/strenth5.png';
         }else{
-            strength = '../res/icons/strength/strength1.png';
+            strength = '../res/icons/strength/strenth1.png';
         }
 
         if(element.BatteryLevel > 0 && element.BatteryLevel < 5){
