@@ -206,6 +206,7 @@ const tableGenerator = (data, selectedRows) => {
 
 calculateDistance()
 async function calculateDistance(id,distances){
+    distances = []
     let data1 = await getData(server);
     var distance,xA,xB,yA,yB
     distances.pop()
