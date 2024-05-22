@@ -1,3 +1,5 @@
+let distances = [8]
+
 // url
 const server = 'http://localhost:8080/radios/';
 
@@ -44,7 +46,7 @@ const loop = async () => {
 
     tableRows.forEach(element => {
         element.addEventListener('click', () => {
-            calculateDistance(element.id)
+            calculateDistance(element.id,distances)
             // po kliknieciu jest dodawana klasa selected do rowa tabeli i do 
             // tablicy selectedRows jest dodawany id row'a
             // a jesli row juz zawiera selected to zostaje usuniety z row'a i arraya
@@ -203,10 +205,9 @@ const tableGenerator = (data, selectedRows) => {
 
 
 calculateDistance()
-async function calculateDistance(id){
+async function calculateDistance(id,distances){
     let data1 = await getData(server);
     var distance,xA,xB,yA,yB
-    var distances = [8]
     distances.pop()
     xA = data1[id].Position.Lat
     yA = data1[id].Position.Lon
@@ -214,7 +215,7 @@ async function calculateDistance(id){
     xB = data1[i].Position.Lat
     yB = data1[i].Position.Lon
     distance = Math.sqrt(Math.pow(xB - xA,2) + Math.pow(yB-yA,2))
-    // console.log(distance)
+    distance = parseFloat(distance.toFixed(2))
     distances.push(distance)
     }
     console.log(distances)
