@@ -44,7 +44,7 @@ const loop = async () => {
 
     tableRows.forEach(element => {
         element.addEventListener('click', () => {
-            
+            calculateDistance(element.id)
             // po kliknieciu jest dodawana klasa selected do rowa tabeli i do 
             // tablicy selectedRows jest dodawany id row'a
             // a jesli row juz zawiera selected to zostaje usuniety z row'a i arraya
@@ -200,15 +200,23 @@ const tableGenerator = (data, selectedRows) => {
     return html;
 }
 
+
+
 calculateDistance()
-async function calculateDistance(data){
+async function calculateDistance(id){
     let data1 = await getData(server);
     var distance,xA,xB,yA,yB
-    xA = data1[0].Position.Lat
-    xB = data1[1].Position.Lat
-    yA = data1[0].Position.Lon
-    yB = data1[1].Position.Lon
+    var distances = [8]
+    distances.pop()
+    xA = data1[id].Position.Lat
+    yA = data1[id].Position.Lon
+    for(let i= 0; i < 8;i++){
+    xB = data1[i].Position.Lat
+    yB = data1[i].Position.Lon
     distance = Math.sqrt(Math.pow(xB - xA,2) + Math.pow(yB-yA,2))
-    console.log(distance)
-    return distance
+    // console.log(distance)
+    distances.push(distance)
+    }
+    console.log(distances)
+    return distances
 }
