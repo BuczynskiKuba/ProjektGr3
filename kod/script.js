@@ -4,6 +4,11 @@ const server = 'http://localhost:8080/radios/';
 // pobranie z html diva o klasie .table gdzie wrzuca sie tabela
 const table = document.querySelector('.table');
 
+// aktualnie zaznaczone row'y
+// gdyz tabela co 10s sie odswieza dlatego trzeba zapisac co bylo
+// klikniete
+let selectedRows = [];
+
 // pobieranie danych z API
 const getData = async (url) => {
     try {
@@ -29,8 +34,39 @@ const loop = async () => {
     // pobranie danych 
     let data = await getData(server);
 
-    // dodawanie tabeli do html'a
-    table.innerHTML = tableGenerator(data)
+    // dodawanie tabeli do html'a 
+    table.innerHTML = tableGenerator(data, selectedRows)
+
+    let tableRows = document.querySelectorAll('.tableRow');
+
+
+
+
+    tableRows.forEach(element => {
+        element.addEventListener('click', () => {
+            
+            // po kliknieciu jest dodawana klasa selected do rowa tabeli i do 
+            // tablicy selectedRows jest dodawany id row'a
+            // a jesli row juz zawiera selected to zostaje usuniety z row'a i arraya
+            if(element.classList.contains("selected")){
+                element.classList.remove('selected')
+                //usuniecie z selectedRows danego id
+                selectedRows[0] = -1;
+
+            }else{
+                tableRows.forEach( row => {
+                    if(row.classList.contains("selected")){
+                        row.classList.remove("selected")
+                    }
+                })
+                element.classList.add('selected')
+                selectedRows[0] = element.id;
+                
+
+
+            }
+        })
+    })
 
 
 };
@@ -38,7 +74,8 @@ const loop = async () => {
 // Odswiezanie loopa
 const intervalId = setInterval(loop, 1000)
 
-const tableGenerator = (data) => {
+
+const tableGenerator = (data, selectedRows) => {
     // id wierszy tabeli
     let deviceId = 0;
 
@@ -62,6 +99,19 @@ const tableGenerator = (data) => {
 
     // petla for po pobranym obiekcie z danymi
     data.forEach(element => {
+
+        // jestli ponizszy warunek sie sprawdzi
+        // selected przyjmie wartosc "seleted"
+        // przez co taka klasa doda sie do wiersza tabeli
+
+        let selected = ''
+        
+        selectedRows.forEach( row => {
+            if(row == deviceId){
+                selected = "selected";
+            } 
+        })
+
         
         // w tych zmiennych jest ustalana sciezka do odpowiedniego obrazka
         let type = '';
@@ -126,7 +176,7 @@ const tableGenerator = (data) => {
 
         // dodawanie kolejnych wierszy do tabeli
         html += `
-            <tr id='deviceId ` + deviceId + `'>
+            <tr id='` + deviceId + `' class='tableRow ` + selected +`'>
                 <td>` + element.Id + `</td>
                 <td>` + element.Name + `</td>
                 <td><img scr='` + type + `'/></td>
