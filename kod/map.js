@@ -1,5 +1,5 @@
 // Initialize the map
-var map = L.map('map').setView([51.505, -0.09], 13); // Example coordinates
+var map = L.map('map').setView([50.0485, 19.90791], 13); // Example coordinates
 // Add tile layer
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -22,29 +22,30 @@ function addMarker(coordinates, icon) {
 
 // Example usage
 
-var example = L.icon({
-    iconUrl: '../res/icons/type/basestation.png',
-    iconSize: [25, 41], // size of the icon
-    iconAnchor: [12, 41], // point of the icon which will correspond to marker's location
-    popupAnchor: [-3, -41] // point from which the popup should open relative to the iconAnchor
-});
+// var example = L.icon({
+//     iconUrl: '../res/icons/mapIcons/basestation.png',
+//     iconSize: [25, 41], // size of the icon
+//     iconAnchor: [12, 41], // point of the icon which will correspond to marker's location
+//     popupAnchor: [-3, -41] // point from which the popup should open relative to the iconAnchor
+// });
+
 const baseStationIcon = L.icon({
-    iconUrl: '../res/icons/type/basestation.png',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
+    iconUrl: '../res/icons/mapIcons/basestationmarker.png',
+    iconSize: [75, 75],
+    iconAnchor: [0, 0],
     popupAnchor: [-3, -41]
 });
 
 const carIcon = L.icon({
-    iconUrl: '../res/icons/type/car.png',
-    iconSize: [25, 41],
+    iconUrl: '../res/icons/mapIcons/carmarker.png',
+    iconSize: [75, 75],
     iconAnchor: [12, 41],
     popupAnchor: [-3, -41]
 });
 
 const portableIcon = L.icon({
-    iconUrl: '../res/icons/type/portable.png',
-    iconSize: [25, 41],
+    iconUrl: '../res/icons/mapIcons/portablemarker.png',
+    iconSize: [75, 75],
     iconAnchor: [12, 41],
     popupAnchor: [-3, -41]
 });

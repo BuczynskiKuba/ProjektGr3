@@ -8,6 +8,7 @@ const table = document.querySelector('.table');
 // gdyz tabela co 10s sie odswieza dlatego trzeba zapisac co bylo
 // klikniete
 let selectedRows = [];
+var markers = []; //tej tablicy użyjemy do czyszczenia danych
 
 // pobieranie danych z API
 const getData = async (url) => {
@@ -35,9 +36,17 @@ const getData = async (url) => {
 const loop = async () => {
     // pobranie danych 
     let data = await getData(server);
+    //PROPOZYCJA: 
+    //może by tak w try catchu zrobić pobieranie danych, czasem serwer zwraca error co sprawia że tabela znika
+    //zamiast tego można by po prostu nie odświeżać danych dopóki nie dostaniemy ich na nowo.
+    //Koniec propozycji
 
+    //czyszczenie markerów przed wygenerowaniem nowych
+    clearMarkers();
     // dodawanie tabeli do html'a 
     table.innerHTML = tableGenerator(data, selectedRows)
+    //generuje markery na mapie
+    markersGenerator(data, selectedRows);
 
     let tableRows = document.querySelectorAll('.tableRow');
 
@@ -56,7 +65,8 @@ const loop = async () => {
                 //usuniecie z selectedRows danego id
                 selectedRows[0] = -1;
 
-            }else{
+            }
+            else {
                 // u
                 tableRows.forEach( row => {
                     if(row.classList.contains("selected")){
@@ -78,25 +88,33 @@ loop()
 
 // Odswiezanie loopa
 const intervalId = setInterval(loop, 10000)
-
+const clearMarkers = () => {
+    markers.forEach(function(marker) {
+        map.removeLayer(marker);
+    });
+}
+//generator markerów na mapie
 const markersGenerator = (data, selectedRows) => {
     let type = '';
-    data.forEach( row => {
+    data.forEach(element => {
+        var elementPos = [element.Position.Lat, element.Position.Lon]
         switch(element.Type){
             case "Portable":
-                type = 'images/Portable.png'
-                break
+                markers.push(addMarker(elementPos, portableIcon));
+                break;
             case "Car":
-                type = 'images/Car.png'
-                break
+                markers.push(addMarker(elementPos, carIcon));
+                break;
             case "BaseStation":
-                type = "images/BaseStation.png";
-                break
+                markers.push(addMarker(elementPos, baseStationIcon));
+                break;
             default:
-                type = "images/Unknown.png"
-            break
+                markers.push(addMarkerGeneric(elementPos));
+                break;
         }
     })
+
+    return markers;
 }
 const tableGenerator = (data, selectedRows) => {
     // id wierszy tabeli
@@ -145,31 +163,31 @@ const tableGenerator = (data, selectedRows) => {
         // ponizsze if'y i switche zmieniaja sciezki do zdjec
         switch(element.Type){
             case "Portable":
-                type = 'images/Portable.png'
+                type = '../res/icons/type/portable.png'
                 break
             case "Car":
-                type = 'images/Car.png';
+                type = '../res/icons/type/car.png';
                 break
             case "BaseStation":
-                type = "images/BaseStation.png";
+                type = "../res/icons/type/basestation.png";
                 break
             default:
-                type = "images/Unknown.png";
+                type = "../res/icons/type/unknown.png";
                 break
         }
         // addMarker(element.Position, example);
         // addMarkerGeneric(markerPosition)
         
         if( element.Strength > 0 && element.Strength < 3){
-            strength = 'images/Strength1.png'
+            strength = '../res/icons/strenth/strenth1.png'
         }else if( element.Strength >= 3 && element.Strength < 5){
-            strength = 'images/Strength2.png';
+            strength = '../res/icons/strenth/strenth2.png';
         }else if( element.Strength >= 5 && element.Strength < 7){
-            strength = 'images/Strength3.png';
+            strength = '../res/icons/strenth/strenth3.png';
         }else if( element.Strength >= 7){
-            strength = 'images/Strength4.png';
+            strength = '../res/icons/strenth/strenth4.png';
         }else{
-            strength = 'images/Strength0.png';
+            strength = '../res/icons/strenth/strenth0.png';
         }
 
         if(element.BatteryLevel > 0 && element.BatteryLevel < 5){
