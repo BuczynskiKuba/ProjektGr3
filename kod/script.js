@@ -124,7 +124,6 @@ const tableGenerator = (data, selectedRows) => {
         let batteryLevel = ''
         let workingMode = '';
 
-
         // ponizsze if'y i switche zmieniaja sciezki do zdjec
         switch(element.Type){
             case "Portable":
@@ -210,5 +209,3 @@ const tableGenerator = (data, selectedRows) => {
 
     return html;
 }
-
-

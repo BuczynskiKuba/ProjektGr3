@@ -62,8 +62,4 @@ tr {
 .table {
   display: flex;
   justify-content: center;
-}
-
-.selected {
-  background-color: var(--color-5);
 }/*# sourceMappingURL=style.css.map */
