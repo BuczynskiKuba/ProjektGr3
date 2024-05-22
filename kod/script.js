@@ -1,7 +1,6 @@
 // url
 const server = 'http://localhost:8080/radios/';
 
-
 // pobieranie danych z API
 
 const getData = async (url) => {
