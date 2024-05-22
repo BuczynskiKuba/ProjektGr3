@@ -1,9 +1,10 @@
 // url
 const server = 'http://localhost:8080/radios/';
 
+// pobranie z html diva o klasie .table gdzie wrzuca sie tabela
+const table = document.querySelector('.table');
 
 // pobieranie danych z API
-
 const getData = async (url) => {
     try {
         const response = await fetch(url);
@@ -36,12 +37,6 @@ const loop = async () => {
 
 // Odswiezanie loopa
 const intervalId = setInterval(loop, 1000)
-
-
-// pobranie z html diva o klasie .table gdzie wrzuca sie tabela
-const table = document.querySelector('.table');
-
-
 
 const tableGenerator = (data) => {
     // id wierszy tabeli
@@ -143,6 +138,9 @@ const tableGenerator = (data) => {
                 <td>` + element.Position.Lon + `</td>
             </tr>
         `
+        //dodanie znacznika na mapie
+        // addMarkers(element.Position);
+
         // inkrementacja id wiersza 
         deviceId++;
     });

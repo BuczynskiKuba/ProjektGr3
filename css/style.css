@@ -5,17 +5,31 @@
   background-color: rgba(255, 0, 0, 0.1);
 }
 
+:root {
+  --color-1:#EAE8FF;
+  --color-2:#D8D5D8;
+  --color-3:#ADACB5;
+  --color-4:#2D3142;
+  --color-5:#B0D7FF;
+}
+
 main {
   width: 100vw;
   min-height: 100vh;
+  display: flex;
 }
 
 .table, .map {
-  width: 50%;
+  width: 50vw;
   height: inherit;
 }
 
+.map {
+  border-radius: 25px;
+}
+
 #map {
-  height: 400px;
+  height: 100%;
   width: 100%;
+  border-radius: 20px;
 }/*# sourceMappingURL=style.css.map */
