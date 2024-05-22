@@ -28,26 +28,28 @@ function addMarker(coordinates, icon) {
 //     iconAnchor: [12, 41], // point of the icon which will correspond to marker's location
 //     popupAnchor: [-3, -41] // point from which the popup should open relative to the iconAnchor
 // });
-
+const size = [75,75];
+const anchor = [-37,-37];
+const popup = [-3,-41];
 const baseStationIcon = L.icon({
     iconUrl: '../res/icons/mapIcons/basestationmarker.png',
-    iconSize: [75, 75],
-    iconAnchor: [0, 0],
-    popupAnchor: [-3, -41]
+    iconSize: size,
+    iconAnchor: anchor,
+    popupAnchor: popup
 });
 
 const carIcon = L.icon({
     iconUrl: '../res/icons/mapIcons/carmarker.png',
-    iconSize: [75, 75],
-    iconAnchor: [12, 41],
-    popupAnchor: [-3, -41]
+    iconSize: size,
+    iconAnchor: anchor,
+    popupAnchor: popup
 });
 
 const portableIcon = L.icon({
     iconUrl: '../res/icons/mapIcons/portablemarker.png',
-    iconSize: [75, 75],
-    iconAnchor: [12, 41],
-    popupAnchor: [-3, -41]
+    iconSize: size,
+    iconAnchor: anchor,
+    popupAnchor: popup
 });
 
 //DEBUG

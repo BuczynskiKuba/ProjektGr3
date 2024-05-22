@@ -31,27 +31,17 @@ const getData = async (url) => {
 }
 
 
-
 // taki Main, tutaj sie wykonuja rzeczy w petli co 10s
 const loop = async () => {
     // pobranie danych 
     let data = await getData(server);
-    //PROPOZYCJA: 
-    //może by tak w try catchu zrobić pobieranie danych, czasem serwer zwraca error co sprawia że tabela znika
-    //zamiast tego można by po prostu nie odświeżać danych dopóki nie dostaniemy ich na nowo.
-    //Koniec propozycji
 
-    //czyszczenie markerów przed wygenerowaniem nowych
     clearMarkers();
     // dodawanie tabeli do html'a 
     table.innerHTML = tableGenerator(data, selectedRows)
-    //generuje markery na mapie
+    // dodawanie markerów na mapę
     markersGenerator(data, selectedRows);
-
     let tableRows = document.querySelectorAll('.tableRow');
-
-
-
 
     tableRows.forEach(element => {
         element.addEventListener('click', () => {
@@ -65,8 +55,7 @@ const loop = async () => {
                 //usuniecie z selectedRows danego id
                 selectedRows[0] = -1;
 
-            }
-            else {
+            }else{
                 // u
                 tableRows.forEach( row => {
                     if(row.classList.contains("selected")){
@@ -76,12 +65,9 @@ const loop = async () => {
                 element.classList.add('selected')
                 selectedRows[0] = element.id;
             
-
             }
         })
     })
-
-
 };
 
 loop()
@@ -123,7 +109,7 @@ const tableGenerator = (data, selectedRows) => {
     // html tabeli
 
     let html = `
-        <table>
+        <table class="rounded">
             <tr>
                 <th>Id</th>
                 <th>Name</th>
@@ -132,8 +118,6 @@ const tableGenerator = (data, selectedRows) => {
                 <th>Strenth</th>
                 <th>Battery Level</th>
                 <th>Working Mode</th>
-                <th>Position Lat</th>
-                <th>Position Lon</th>
             </tr>
     `;
 
@@ -171,54 +155,53 @@ const tableGenerator = (data, selectedRows) => {
             case "BaseStation":
                 type = "../res/icons/type/basestation.png";
                 break
-            default:
-                type = "../res/icons/type/unknown.png";
-                break
         }
         // addMarker(element.Position, example);
         // addMarkerGeneric(markerPosition)
         
         if( element.Strength > 0 && element.Strength < 3){
-            strength = '../res/icons/strenth/strenth1.png'
+            strength = '../res/icons/strength/strength2.png'
         }else if( element.Strength >= 3 && element.Strength < 5){
-            strength = '../res/icons/strenth/strenth2.png';
+            strength = '../res/icons/strength/strength3.png';
         }else if( element.Strength >= 5 && element.Strength < 7){
-            strength = '../res/icons/strenth/strenth3.png';
+            strength = '../res/icons/strength/strength4.png';
         }else if( element.Strength >= 7){
-            strength = '../res/icons/strenth/strenth4.png';
+            strength = '../res/icons/strength/strength5.png';
         }else{
-            strength = '../res/icons/strenth/strenth0.png';
+            strength = '../res/icons/strength/strength1.png';
         }
 
         if(element.BatteryLevel > 0 && element.BatteryLevel < 5){
-            batteryLevel = 'images/bateria1.png'
+            batteryLevel = '../res/icons/battery/batterylvl1.png'
         }else if(element.BatteryLevel >= 5 && element.BatteryLevel < 10){
-            batteryLevel = 'images/bateria2.png'
+            batteryLevel = '../res/icons/battery/batterylvl2.png'
         }else if(element.BatteryLevel >= 10 && element.BatteryLevel < 20){
-            batteryLevel = 'images/bateria3.png'
+            batteryLevel = '../res/icons/battery/batterylvl3.png'
         }else if(element.BatteryLevel >= 20 && element.BatteryLevel < 40){
-            batteryLevel = 'images/bateria4.png'
+            batteryLevel = '../res/icons/battery/batterylvl4.png'
         }else if(element.BatteryLevel >= 40 && element.BatteryLevel < 60){
-            batteryLevel = 'images/bateria5.png'
+            batteryLevel = '../res/icons/battery/batterylvl5.png'
         }else if(element.BatteryLevel >= 60 && element.BatteryLevel < 90){
-            batteryLevel = 'images/bateria6.png'
+            batteryLevel = '../res/icons/battery/batterylvl6.png'
         }else if(element.BatteryLevel >= 90){
-            batteryLevel = 'images/bateria7.png'
+            batteryLevel = '../res/icons/battery/batterylvl7.png'
         }else{
-            batteryLevel = 'images/bateria1.png'
+            batteryLevel = '../res/icons/battery/batterylvl1.png'
         }
 
         switch(element.WorkingMode){
             case "Voice":
-                WorkingMode = 'images/Voice.png'
+                workingMode = '../res/icons/workingMode/voice.png'
                 break
             case "Data":
-                WorkingMode = 'images/Data.png'
+                workingMode = '../res/icons/workingMode/data.png'
                 break
             case "Idle":
-                WorkingMode = 'images/Idle.png'
+                workingMode = '../res/icons/workingMode/idle.png'
+                break
             default:
-                WorkingMode = 'images/Unknown.png'
+                workingMode = 'images/Unknown.png'
+                break
         }
 
 
@@ -232,13 +215,8 @@ const tableGenerator = (data, selectedRows) => {
                 <td><img src='` + strength + `'/></td>
                 <td><img src='` + batteryLevel + `'/></td>
                 <td><img src='` + workingMode + `'/></td>
-                <td>` + element.Position.Lat + `</td>
-                <td>` + element.Position.Lon + `</td>
             </tr>
         `
-        //dodanie znacznika na mapie
-        // addMarkers(element.Position);
-
         // inkrementacja id wiersza 
         deviceId++;
     });
