@@ -27,7 +27,7 @@ main {
 //cos
 .map {
 
-    height: 100vh !important;
+    height: 50vh;
     border-radius: 25px;
 }
 #map { 
@@ -51,7 +51,7 @@ th{
     background-color: var(--color-3);
   
   }
-td{
+tr{
     background-color: var(--color-1) ;
   }
 
@@ -62,5 +62,5 @@ td{
 }
 
 .selected{
-    background: blue;
+    background-color: var(--color-5)
 }

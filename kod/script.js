@@ -46,6 +46,7 @@ const loop = async () => {
 
     tableRows.forEach(element => {
         element.addEventListener('click', () => {
+            console.log(selectedRows);
             
             // po kliknieciu jest dodawana klasa selected do rowa tabeli i do 
             // tablicy selectedRows jest dodawany id row'a
