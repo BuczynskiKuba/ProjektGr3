@@ -29,6 +29,8 @@ const getData = async (url) => {
     }
 }
 
+
+
 // taki Main, tutaj sie wykonuja rzeczy w petli co 10s
 const loop = async () => {
     // pobranie danych 
@@ -207,3 +209,5 @@ const tableGenerator = (data, selectedRows) => {
 
     return html;
 }
+
+
