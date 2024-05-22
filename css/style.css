@@ -78,4 +78,13 @@ main {
   height: 100%;
   width: 100%;
   border-radius: 20px;
+}
+
+.markerPreview {
+  position: absolute;
+  border-radius: 25px;
+  width: 30vw;
+  height: 20vh;
+  background-color: white;
+  z-index: 9999;
 }/*# sourceMappingURL=style.css.map */

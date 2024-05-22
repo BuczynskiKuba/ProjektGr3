@@ -83,23 +83,45 @@ const clearMarkers = () => {
 const markersGenerator = (data, selectedRows) => {
     let type = '';
     data.forEach(element => {
+        let marker;
         var elementPos = [element.Position.Lat, element.Position.Lon]
+        let icon;
+        let iconClicked;
         switch(element.Type){
             case "Portable":
-                markers.push(addMarker(elementPos, portableIcon));
+                icon = portableIcon;
+                iconClicked = portableIconClicked;
                 break;
             case "Car":
-                markers.push(addMarker(elementPos, carIcon));
+                icon = carIcon;
+                iconClicked = carIconClicked;
                 break;
             case "BaseStation":
-                markers.push(addMarker(elementPos, baseStationIcon));
+                icon = baseStationIcon;
+                iconClicked = baseStationIconClicked;
                 break;
             default:
-                markers.push(addMarkerGeneric(elementPos));
+                icon = unknownIcon;
+                iconClicked = unknownIconClicked;
                 break;
         }
+        marker = addMarker(elementPos, icon);
+        markers.push(marker)
+        var isClicked = false;
+        marker.on('click', function(e) {
+            console.log("click");
+            isClicked = !isClicked;
+            if (isClicked) {
+                console.log("it is clicked");
+                marker.setIcon(iconClicked)
+            }
+            else {
+                console.log("it is not clicked");
+                marker.setIcon(icon)
+            }
+        });
     })
-
+    console.log(markers);
     return markers;
 }
 const tableGenerator = (data, selectedRows) => {

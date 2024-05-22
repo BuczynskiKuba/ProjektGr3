@@ -28,9 +28,9 @@ function addMarker(coordinates, icon) {
 //     iconAnchor: [12, 41], // point of the icon which will correspond to marker's location
 //     popupAnchor: [-3, -41] // point from which the popup should open relative to the iconAnchor
 // });
-const size = [75,75];
-const anchor = [-37,-37];
-const popup = [-3,-41];
+const size = [40,40];
+const anchor = [20,40];
+const popup = [0,0];
 const baseStationIcon = L.icon({
     iconUrl: '../res/icons/mapIcons/basestationmarker.png',
     iconSize: size,
@@ -52,6 +52,26 @@ const portableIcon = L.icon({
     popupAnchor: popup
 });
 
+const baseStationIconClicked = L.icon({
+    iconUrl: '../res/icons/mapIcons/basestationmarkerclicked.png',
+    iconSize: size,
+    iconAnchor: anchor,
+    popupAnchor: popup
+});
+
+const carIconClicked = L.icon({
+    iconUrl: '../res/icons/mapIcons/carmarkerclicked.png',
+    iconSize: size,
+    iconAnchor: anchor,
+    popupAnchor: popup
+});
+
+const portableIconClicked = L.icon({
+    iconUrl: '../res/icons/mapIcons/portablemarkerclicked.png',
+    iconSize: size,
+    iconAnchor: anchor,
+    popupAnchor: popup
+});
 //DEBUG
 //EXAMPLES
 // var coordinates = [51.505, -1.09];
