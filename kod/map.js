@@ -14,11 +14,27 @@ function addMarker(coordinatesArray) {
         L.marker(coord).addTo(map);
     });
 }
-// function addMarker(coordinatesArray, iconType) {
-//     // Use the iconType to get the correct icon from the mapping object
-//     const icon = iconMapping[iconType];
+function addMarker(coordinatesArray, icon) {
+    iconUrl = icon.iconUrl
+    coordinatesArray.forEach(function(coord) {
+        L.marker(coord).addTo(map);
+    });
+}
+// Example usage
+var coordinates = [
+    [51.505, -1.09], // London
+    [48.8566, 2.3522] // Paris
+];
+var coordinates2 = [
+    [53.505, -0.09], // London
+    [48.8566, 20.3522] // Paris
+];
+var unknown = L.icon({
+    iconUrl: '../res/custom-marker.png',
+    iconSize: [25, 41], // size of the icon
+    iconAnchor: [12, 41], // point of the icon which will correspond to marker's location
+    popupAnchor: [-3, -41] // point from which the popup should open relative to the iconAnchor
+});
 
-//     coordinatesArray.forEach(function(coord) {
-//         L.marker(coord, {icon: icon}).addTo(map);
-//     });
-// }
+addMarker(coordinates)
+addMarker(coordinates2, unknown);
