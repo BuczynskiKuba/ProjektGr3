@@ -23,8 +23,20 @@ main {
 }
 
 .table, .map {
-  width: 50vw;
-  height: inherit;
+  width: 80vw;
+}
+
+.table{
+    background-color: var(--color-1);
+    padding: 2vw 2vh;
+    display: flex;
+    justify-content: center;
+
+
+  
+  .selected{
+    background-color: var(--color-5)
+  }
 }
 
 .map {
@@ -37,29 +49,3 @@ main {
   width: 100%;
   border-radius: 20px;
 }
-
-table, th, td {
-  border: solid 1px black;
-  border-collapse: collapse;
-}
-
-table {
-  width: 95%;
-}
-
-td, th {
-  padding: 5px;
-}
-
-th {
-  background-color: var(--color-3);
-}
-
-tr {
-  background-color: var(--color-1);
-}
-
-.table {
-  display: flex;
-  justify-content: center;
-}/*# sourceMappingURL=style.css.map */

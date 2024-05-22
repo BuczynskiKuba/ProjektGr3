@@ -96,8 +96,6 @@ const tableGenerator = (data, selectedRows) => {
                 <th>Strenth</th>
                 <th>Battery Level</th>
                 <th>Working Mode</th>
-                <th>Position Lat</th>
-                <th>Position Lon</th>
             </tr>
     `;
 
@@ -194,8 +192,6 @@ const tableGenerator = (data, selectedRows) => {
                 <td><img src='` + strength + `'/></td>
                 <td><img src='` + batteryLevel + `'/></td>
                 <td><img src='` + workingMode + `'/></td>
-                <td>` + element.Position.Lat + `</td>
-                <td>` + element.Position.Lon + `</td>
             </tr>
         `
         //dodanie znacznika na mapie
@@ -208,4 +204,28 @@ const tableGenerator = (data, selectedRows) => {
     html += '</table>'
 
     return html;
+}
+
+
+const markersGenerator = (data, selectedRows) => {
+    let type = '';
+
+    switch(element.Type){
+        case "Portable":
+            type = 'images/Portable.png'
+            break
+        case "Car":
+            type = 'images/Car.png'
+            break
+        case "BaseStation":
+            type = "images/BaseStation.png";
+            break
+        default:
+            type = "images/Unknown.png"
+            break
+    }
+
+    data.forEach( row => {
+        
+    })
 }
