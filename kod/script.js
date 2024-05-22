@@ -1,3 +1,5 @@
+// import addMarkers from "../../kod/map.js";
+
 // url
 const server = 'http://localhost:8080/radios/';
 
@@ -37,11 +39,6 @@ const loop = async () => {
 
 // Odswiezanie loopa
 const intervalId = setInterval(loop, 1000)
-
-
-
-
-
 
 const tableGenerator = (data) => {
     // id wierszy tabeli
@@ -143,6 +140,9 @@ const tableGenerator = (data) => {
                 <td>` + element.Position.Lon + `</td>
             </tr>
         `
+        //dodanie znacznika na mapie
+        // addMarkers(element.Position);
+
         // inkrementacja id wiersza 
         deviceId++;
     });
