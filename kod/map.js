@@ -7,30 +7,21 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 
 // Example function to add markers
-function addMarkerGeneric(coordinatesArray) {
-    coordinatesArray.forEach(function(coord) {
-        L.marker(coord).addTo(map);
-    });
+function addMarkerGeneric(coordinates) {
+    let coord = coordinates
+    let marker = L.marker(coord).addTo(map);
+
+    return marker
 }
-function addMarker(coordinatesArray, icon) {
-    iconUrl = icon.iconUrl
-    coordinatesArray.forEach(function(coord) {
-        L.marker(coord, { icon: icon }).addTo(map);
-    });
+function addMarker(coordinates, icon) {
+    let coord = coordinates
+    let marker = L.marker(coord, { icon: icon }).addTo(map);
+
+    return marker
 }
+
 // Example usage
-var coordinates = [
-    [51.505, -1.09], // London
-    [48.8566, 2.3522] // Paris
-];
-var coordinates2 = [
-    [56.505, -5.09], // London
-    [43.8566, 10.3522] // Paris
-];
-var coordinates3 = [
-    [26.505, -8.09], // London
-    [47.8566, 15.3522] // Paris
-];
+
 var example = L.icon({
     iconUrl: '../res/icons/type/basestation.png',
     iconSize: [25, 41], // size of the icon
@@ -58,7 +49,12 @@ const portableIcon = L.icon({
     popupAnchor: [-3, -41]
 });
 
-addMarkerGeneric(coordinates)
-addMarker(coordinates2, example);
-addMarker(coordinates3, carIcon);
+//DEBUG
+//EXAMPLES
+// var coordinates = [51.505, -1.09];
+// var coordinates2 = [56.505, -5.09];
+// var coordinates3 = [ 26.505, -8.09];
+// addMarkerGeneric(coordinates)
+// addMarker(coordinates2, example);
+// addMarker(coordinates3, carIcon);
 

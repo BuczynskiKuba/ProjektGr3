@@ -33,7 +33,7 @@ const loop = async () => {
 
     // dodawanie tabeli do html'a
     table.innerHTML = tableGenerator(data)
-
+    markersGenerator(data);
 
 };
 
@@ -43,6 +43,31 @@ loop();
 // Odswiezanie loopa
 const intervalId = setInterval(loop, 10000)
 
+
+
+
+    //przed wykonaniem pętli, usuwamy wszystkie markery
+var markerArray = [];
+
+const markersGenerator = (data, selectedRows) => {
+        let type = '';
+        data.forEach( row => {
+            switch(element.Type){
+                case "Portable":
+                    markerArray.push(addMarker(markerPosition, portableIcon))
+                    break
+                case "Car":
+                    markerArray.push(addMarker(markerPosition, carIcon))
+                    break
+                case "BaseStation":
+                    markerArray.push(addMarker(markerPosition, baseStationIcon))
+                    break
+                default:
+                    markerArray.push(addMarkerGeneric(markerPosition))
+                break
+        }
+    })
+}
 const tableGenerator = (data) => {
     // id wierszy tabeli
     let deviceId = 0;
@@ -71,24 +96,26 @@ const tableGenerator = (data) => {
         // w tych zmiennych jest ustalana sciezka do odpowiedniego obrazka
         let type = '';
         let strength = '';
-        let batteryLevel = ''
+        let batteryLevel = '';
         let workingMode = '';
-
+        let markerPosition = [element.Position.Lat, element.Position.Lon];
         // ponizsze if'y i switche zmieniaja sciezki do zdjec
         switch(element.Type){
             case "Portable":
                 type = 'images/Portable.png'
                 break
             case "Car":
-                type = 'images/Car.png'
+                type = 'images/Car.png';
                 break
             case "BaseStation":
                 type = "images/BaseStation.png";
                 break
             default:
-                type = "images/Unknown.png"
+                type = "images/Unknown.png";
                 break
         }
+        // addMarker(element.Position, example);
+        // addMarkerGeneric(markerPosition)
         
         if( element.Strength > 0 && element.Strength < 3){
             strength = 'images/Strength1.png'

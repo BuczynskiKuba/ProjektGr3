@@ -17,7 +17,6 @@ main {
   width: 100vw;
   min-height: 100vh;
   display: flex;
-  flex-direction: column;
   background-color: var(--color-4);
   align-items: center;
 }
