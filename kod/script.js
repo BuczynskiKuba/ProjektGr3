@@ -1,5 +1,3 @@
-// import addMarkers from "../../kod/map.js";
-
 // url
 const server = 'http://localhost:8080/radios/';
 
