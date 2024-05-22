@@ -24,6 +24,8 @@ const getData = async (url) => {
     }
 }
 
+
+
 // taki Main, tutaj sie wykonuja rzeczy w petli co 10s
 const loop = async () => {
     // pobranie danych 
@@ -35,8 +37,11 @@ const loop = async () => {
 
 };
 
+// pierwsze wywolanie aby nie czekac 10s
+loop();
+
 // Odswiezanie loopa
-const intervalId = setInterval(loop, 1000)
+const intervalId = setInterval(loop, 10000)
 
 
 
@@ -151,3 +156,5 @@ const tableGenerator = (data) => {
 
     return html;
 }
+
+
