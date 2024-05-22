@@ -148,31 +148,3 @@ const tableGenerator = (data) => {
 
     return html;
 }
-
-const baseStationIcon = L.icon({
-    iconUrl: '../res/custom-marker.png',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [-3, -41]
-});
-
-const carIcon = L.icon({
-    iconUrl: '../res/custom-marker.png',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [-3, -41]
-});
-
-const portableIcon = L.icon({
-    iconUrl: '../res/custom-marker.png',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [-3, -41]
-});
-
-const unknownIcon = L.icon({
-    iconUrl: '../res/custom-marker.png',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [-3, -41]
-});
