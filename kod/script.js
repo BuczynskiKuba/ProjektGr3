@@ -4,6 +4,12 @@ const server = 'http://localhost:8080/radios/';
 // pobranie z html diva o klasie .table gdzie wrzuca sie tabela
 const table = document.querySelector('.table');
 
+// aktualnie zaznaczone row'y
+// gdyz tabela co 10s sie odswieza dlatego trzeba zapisac co bylo
+// klikniete
+let selectedRows = [];
+var markers = []; //tej tablicy użyjemy do czyszczenia danych
+
 // pobieranie danych z API
 const getData = async (url) => {
     try {
@@ -24,28 +30,109 @@ const getData = async (url) => {
     }
 }
 
+
 // taki Main, tutaj sie wykonuja rzeczy w petli co 10s
 const loop = async () => {
     // pobranie danych 
     let data = await getData(server);
 
-    // dodawanie tabeli do html'a
-    table.innerHTML = tableGenerator(data)
+    clearMarkers();
+    // dodawanie tabeli do html'a 
+    table.innerHTML = tableGenerator(data, selectedRows)
+    // dodawanie markerów na mapę
+    markersGenerator(data, selectedRows);
+    let tableRows = document.querySelectorAll('.tableRow');
 
+    tableRows.forEach(element => {
+        element.addEventListener('click', () => {
+            console.log(selectedRows);
+            
+            // po kliknieciu jest dodawana klasa selected do rowa tabeli i do 
+            // tablicy selectedRows jest dodawany id row'a
+            // a jesli row juz zawiera selected to zostaje usuniety z row'a i arraya
+            if(element.classList.contains("selected")){
+                element.classList.remove('selected')
+                //usuniecie z selectedRows danego id
+                selectedRows[0] = -1;
 
+            }else{
+                // u
+                tableRows.forEach( row => {
+                    if(row.classList.contains("selected")){
+                        row.classList.remove("selected")
+                    }
+                })
+                element.classList.add('selected')
+                selectedRows[0] = element.id;
+            
+            }
+        })
+    })
 };
 
-// Odswiezanie loopa
-const intervalId = setInterval(loop, 1000)
+loop()
 
-const tableGenerator = (data) => {
+// Odswiezanie loopa
+const intervalId = setInterval(loop, 5000)
+
+const clearMarkers = () => {
+    markers.forEach(function(marker) {
+        map.removeLayer(marker);
+    });
+}
+//generator markerów na mapie
+const markersGenerator = (data, selectedRows) => {
+    let type = '';
+    data.forEach(element => {
+        let marker;
+        var elementPos = [element.Position.Lat, element.Position.Lon]
+        let icon;
+        let iconClicked;
+        switch(element.Type){
+            case "Portable":
+                icon = portableIcon;
+                iconClicked = portableIconClicked;
+                break;
+            case "Car":
+                icon = carIcon;
+                iconClicked = carIconClicked;
+                break;
+            case "BaseStation":
+                icon = baseStationIcon;
+                iconClicked = baseStationIconClicked;
+                break;
+            default:
+                icon = unknownIcon;
+                iconClicked = unknownIconClicked;
+                break;
+        }
+        marker = addMarker(elementPos, icon);
+        markers.push(marker)
+        var isClicked = false;
+        marker.on('click', function(e) {
+            console.log("click");
+            isClicked = !isClicked;
+            if (isClicked) {
+                console.log("it is clicked");
+                marker.setIcon(iconClicked)
+            }
+            else {
+                console.log("it is not clicked");
+                marker.setIcon(icon)
+            }
+        });
+    })
+    console.log(markers);
+    return markers;
+}
+const tableGenerator = (data, selectedRows) => {
     // id wierszy tabeli
     let deviceId = 0;
 
     // html tabeli
 
     let html = `
-        <table>
+        <table class="rounded">
             <tr>
                 <th>Id</th>
                 <th>Name</th>
@@ -54,93 +141,105 @@ const tableGenerator = (data) => {
                 <th>Strenth</th>
                 <th>Battery Level</th>
                 <th>Working Mode</th>
-                <th>Position Lat</th>
-                <th>Position Lon</th>
             </tr>
     `;
 
 
     // petla for po pobranym obiekcie z danymi
     data.forEach(element => {
+
+        // jestli ponizszy warunek sie sprawdzi
+        // selected przyjmie wartosc "seleted"
+        // przez co taka klasa doda sie do wiersza tabeli
+
+        let selected = ''
+        
+        selectedRows.forEach( row => {
+            if(row == deviceId){
+                selected = "selected";
+            } 
+        })
+
         
         // w tych zmiennych jest ustalana sciezka do odpowiedniego obrazka
         let type = '';
         let strength = '';
-        let batteryLevel = ''
+        let batteryLevel = '';
         let workingMode = '';
-
-
+        let markerPosition = [element.Position.Lat, element.Position.Lon];
         // ponizsze if'y i switche zmieniaja sciezki do zdjec
         switch(element.Type){
             case "Portable":
-                type = 'images/Portable.png'
+                type = '../res/icons/type/portable.png'
                 break
             case "Car":
-                type = 'images/Car.png'
+                type = '../res/icons/type/car.png';
                 break
             case "BaseStation":
-                type = "images/BaseStation.png";
-                break
-            default:
-                type = "images/Unknown.png"
+                type = "../res/icons/type/basestation.png";
                 break
         }
+        // addMarker(element.Position, example);
+        // addMarkerGeneric(markerPosition)
         
         if( element.Strength > 0 && element.Strength < 3){
-            strength = 'images/Strength1.png'
+            strength = '../res/icons/strength/strenth2.png'
         }else if( element.Strength >= 3 && element.Strength < 5){
-            strength = 'images/Strength2.png';
+            strength = '../res/icons/strength/strenth3.png';
         }else if( element.Strength >= 5 && element.Strength < 7){
-            strength = 'images/Strength3.png';
+            strength = '../res/icons/strength/strenth4.png';
         }else if( element.Strength >= 7){
-            strength = 'images/Strength4.png';
+            strength = '../res/icons/strength/strenth5.png';
         }else{
-            strength = 'images/Strength0.png';
+            strength = '../res/icons/strength/strenth1.png';
         }
 
-        if(element.BatteryLevel > 0 && element.BatteryLevel < 25){
-            batteryLevel = 'images/Battery1.png'
-        }else if(element.BatteryLevel >= 25 && element.BatteryLevel < 50){
-            batteryLevel = 'images/Battery2.png'
-        }else if(element.BatteryLevel >= 50 && element.BatteryLevel < 75){
-            batteryLevel = 'images/Battery3.png'
-        }else if(element.BatteryLevel >= 75){
-            batteryLevel = 'images/Battery4.png'
+        if(element.BatteryLevel > 0 && element.BatteryLevel < 5){
+            batteryLevel = '../res/icons/battery/batterylvl1.png'
+        }else if(element.BatteryLevel >= 5 && element.BatteryLevel < 10){
+            batteryLevel = '../res/icons/battery/batterylvl2.png'
+        }else if(element.BatteryLevel >= 10 && element.BatteryLevel < 20){
+            batteryLevel = '../res/icons/battery/batterylvl3.png'
+        }else if(element.BatteryLevel >= 20 && element.BatteryLevel < 40){
+            batteryLevel = '../res/icons/battery/batterylvl4.png'
+        }else if(element.BatteryLevel >= 40 && element.BatteryLevel < 60){
+            batteryLevel = '../res/icons/battery/batterylvl5.png'
+        }else if(element.BatteryLevel >= 60 && element.BatteryLevel < 90){
+            batteryLevel = '../res/icons/battery/batterylvl6.png'
+        }else if(element.BatteryLevel >= 90){
+            batteryLevel = '../res/icons/battery/batterylvl7.png'
         }else{
-            batteryLevel = 'images/Battery0.png'
+            batteryLevel = '../res/icons/battery/batterylvl1.png'
         }
 
         switch(element.WorkingMode){
             case "Voice":
-                WorkingMode = 'images/Voice.png'
+                workingMode = '../res/icons/workingMode/voice.png'
                 break
             case "Data":
-                WorkingMode = 'images/Data.png'
+                workingMode = '../res/icons/workingMode/data.png'
                 break
             case "Idle":
-                WorkingMode = 'images/Idle.png'
+                workingMode = '../res/icons/workingMode/idle.png'
+                break
             default:
-                WorkingMode = 'images/Unknown.png'
+                workingMode = 'images/Unknown.png'
+                break
         }
 
 
         // dodawanie kolejnych wierszy do tabeli
         html += `
-            <tr id='deviceId ` + deviceId + `'>
+            <tr id='` + deviceId + `' class='tableRow ` + selected +`'>
                 <td>` + element.Id + `</td>
                 <td>` + element.Name + `</td>
-                <td><img scr='` + type + `'/></td>
+                <td><img src='` + type + `'/></td>
                 <td>` + element.SerialNumber + `</td>
-                <td><img scr='` + strength + `'/></td>
-                <td><img scr='` + batteryLevel + `'/></td>
-                <td><img scr='` + workingMode + `'/></td>
-                <td>` + element.Position.Lat + `</td>
-                <td>` + element.Position.Lon + `</td>
+                <td><img src='` + strength + `'/></td>
+                <td><img src='` + batteryLevel + `'/></td>
+                <td><img src='` + workingMode + `'/></td>
             </tr>
         `
-        //dodanie znacznika na mapie
-        // addMarkers(element.Position);
-
         // inkrementacja id wiersza 
         deviceId++;
     });

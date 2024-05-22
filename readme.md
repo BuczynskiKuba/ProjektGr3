@@ -32,4 +32,5 @@ A brief description of what this project does and who it's for
 
 - Zrobienie todolist 
 - Code cleanup
+- w map.js trzeba zmienić iconAnchor żeby ładnie się na mapie układało
 
