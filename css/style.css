@@ -1,8 +1,9 @@
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-  background-color: rgba(255, 0, 0, 0.1);
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
 }
 
 :root {
@@ -16,7 +17,17 @@
 main {
   width: 100vw;
   min-height: 100vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  background-color: var(--color-4);
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .table, .map {
@@ -25,6 +36,7 @@ main {
 }
 
 .map {
+  height: 100vh !important;
   border-radius: 25px;
 }
 
@@ -32,4 +44,34 @@ main {
   height: 100%;
   width: 100%;
   border-radius: 20px;
+}
+
+table, th, td {
+  border: solid 1px black;
+  border-collapse: collapse;
+}
+
+table {
+  width: 95%;
+}
+
+td, th {
+  padding: 5px;
+}
+
+th {
+  background-color: var(--color-3);
+}
+
+td {
+  background-color: var(--color-1);
+}
+
+.table {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }/*# sourceMappingURL=style.css.map */
