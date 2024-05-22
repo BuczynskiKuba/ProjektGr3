@@ -2,4 +2,14 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    background-color: rgba(255, 0, 0, 0.1); //debug
 }
+main {
+    width: 100vw;
+    min-height: 100vh;
+}
+.table, .map {
+    width: 50%;
+    height: inherit;
+}
+#map { height: 400px; width: 100%; }
