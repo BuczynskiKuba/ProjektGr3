@@ -54,6 +54,7 @@ const loop = async () => {
                 selectedRows[0] = -1;
 
             }else{
+                // u
                 tableRows.forEach( row => {
                     if(row.classList.contains("selected")){
                         row.classList.remove("selected")
@@ -61,8 +62,7 @@ const loop = async () => {
                 })
                 element.classList.add('selected')
                 selectedRows[0] = element.id;
-                
-
+            
 
             }
         })
@@ -71,8 +71,10 @@ const loop = async () => {
 
 };
 
+loop()
+
 // Odswiezanie loopa
-const intervalId = setInterval(loop, 1000)
+const intervalId = setInterval(loop, 10000)
 
 
 const tableGenerator = (data, selectedRows) => {
@@ -148,16 +150,22 @@ const tableGenerator = (data, selectedRows) => {
             strength = 'images/Strength0.png';
         }
 
-        if(element.BatteryLevel > 0 && element.BatteryLevel < 25){
-            batteryLevel = 'images/Battery1.png'
-        }else if(element.BatteryLevel >= 25 && element.BatteryLevel < 50){
-            batteryLevel = 'images/Battery2.png'
-        }else if(element.BatteryLevel >= 50 && element.BatteryLevel < 75){
-            batteryLevel = 'images/Battery3.png'
-        }else if(element.BatteryLevel >= 75){
-            batteryLevel = 'images/Battery4.png'
+        if(element.BatteryLevel > 0 && element.BatteryLevel < 5){
+            batteryLevel = 'images/bateria1.png'
+        }else if(element.BatteryLevel >= 5 && element.BatteryLevel < 10){
+            batteryLevel = 'images/bateria2.png'
+        }else if(element.BatteryLevel >= 10 && element.BatteryLevel < 20){
+            batteryLevel = 'images/bateria3.png'
+        }else if(element.BatteryLevel >= 20 && element.BatteryLevel < 40){
+            batteryLevel = 'images/bateria4.png'
+        }else if(element.BatteryLevel >= 40 && element.BatteryLevel < 60){
+            batteryLevel = 'images/bateria5.png'
+        }else if(element.BatteryLevel >= 60 && element.BatteryLevel < 90){
+            batteryLevel = 'images/bateria6.png'
+        }else if(element.BatteryLevel >= 90){
+            batteryLevel = 'images/bateria7.png'
         }else{
-            batteryLevel = 'images/Battery0.png'
+            batteryLevel = 'images/bateria1.png'
         }
 
         switch(element.WorkingMode){
@@ -179,11 +187,11 @@ const tableGenerator = (data, selectedRows) => {
             <tr id='` + deviceId + `' class='tableRow ` + selected +`'>
                 <td>` + element.Id + `</td>
                 <td>` + element.Name + `</td>
-                <td><img scr='` + type + `'/></td>
+                <td><img src='` + type + `'/></td>
                 <td>` + element.SerialNumber + `</td>
-                <td><img scr='` + strength + `'/></td>
-                <td><img scr='` + batteryLevel + `'/></td>
-                <td><img scr='` + workingMode + `'/></td>
+                <td><img src='` + strength + `'/></td>
+                <td><img src='` + batteryLevel + `'/></td>
+                <td><img src='` + workingMode + `'/></td>
                 <td>` + element.Position.Lat + `</td>
                 <td>` + element.Position.Lon + `</td>
             </tr>
