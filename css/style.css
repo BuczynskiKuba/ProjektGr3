@@ -13,4 +13,9 @@ main {
 .table, .map {
   width: 50%;
   height: inherit;
+}
+
+#map {
+  height: 400px;
+  width: 100%;
 }/*# sourceMappingURL=style.css.map */

@@ -1,1 +1,1 @@
-{"version":3,"sources":["../kod/style.scss","style.css"],"names":[],"mappings":"AAAA;EACI,SAAA;EACA,UAAA;EACA,sBAAA;EACA,sCAAA;ACCJ;;ADCA;EACI,YAAA;EACA,iBAAA;ACEJ;;ADAA;EACI,UAAA;EACA,eAAA;ACGJ","file":"style.css"}
+{"version":3,"sources":["../kod/style.scss","style.css"],"names":[],"mappings":"AAAA;EACI,SAAA;EACA,UAAA;EACA,sBAAA;EACA,sCAAA;ACCJ;;ADCA;EACI,YAAA;EACA,iBAAA;ACEJ;;ADAA;EACI,UAAA;EACA,eAAA;ACGJ;;ADDA;EAAO,aAAA;EAAe,WAAA;ACMtB","file":"style.css"}
