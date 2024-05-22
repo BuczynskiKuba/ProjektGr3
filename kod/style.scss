@@ -4,6 +4,13 @@
     box-sizing: border-box;
     background-color: rgba(255, 0, 0, 0.1); //debug
 }
+:root{
+    --color-1:#EAE8FF; 
+    --color-1:#D8D5D8; 
+    --color-1:#ADACB5; 
+    --color-1:#2D3142;
+    --color-1:#B0D7FF;
+}
 main {
     width: 100vw;
     min-height: 100vh;
@@ -13,4 +20,11 @@ main {
     width: 50vw;
     height: inherit;
 }
-#map { height: 400px; width: 100%; }
+.map {
+    border-radius: 25px;
+}
+#map { 
+    height: 100%; width: 100%; 
+    border-radius: 20px;
+
+}

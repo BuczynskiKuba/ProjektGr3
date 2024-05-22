@@ -1,8 +1,10 @@
 // url
 const server = 'http://localhost:8080/radios/';
 
-// pobieranie danych z API
+// pobranie z html diva o klasie .table gdzie wrzuca sie tabela
+const table = document.querySelector('.table');
 
+// pobieranie danych z API
 const getData = async (url) => {
     try {
         const response = await fetch(url);
@@ -37,8 +39,7 @@ const loop = async () => {
 const intervalId = setInterval(loop, 1000)
 
 
-// pobranie z html diva o klasie .table gdzie wrzuca sie tabela
-const table = document.querySelector('.table');
+
 
 
 

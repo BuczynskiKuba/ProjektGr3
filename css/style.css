@@ -5,6 +5,14 @@
   background-color: rgba(255, 0, 0, 0.1);
 }
 
+:root {
+  --color-1:#EAE8FF;
+  --color-1:#D8D5D8;
+  --color-1:#ADACB5;
+  --color-1:#2D3142;
+  --color-1:#B0D7FF;
+}
+
 main {
   width: 100vw;
   min-height: 100vh;
@@ -16,7 +24,12 @@ main {
   height: inherit;
 }
 
+.map {
+  border-radius: 25px;
+}
+
 #map {
-  height: 400px;
+  height: 100%;
   width: 100%;
+  border-radius: 20px;
 }/*# sourceMappingURL=style.css.map */
