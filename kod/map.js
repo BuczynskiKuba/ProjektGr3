@@ -29,8 +29,8 @@ function addMarker(coordinates, icon) {
 //     popupAnchor: [-3, -41] // point from which the popup should open relative to the iconAnchor
 // });
 const size = [75,75];
-const anchor = [-37,-37];
-const popup = [-3,-41];
+const anchor = [0,0];
+const popup = [0,0];
 const baseStationIcon = L.icon({
     iconUrl: '../res/icons/mapIcons/basestationmarker.png',
     iconSize: size,
