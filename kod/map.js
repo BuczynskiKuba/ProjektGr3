@@ -43,7 +43,48 @@ function addMarker(coordinates, icon, clickedicon, selectedRows, id, name) {
     marker.options.customData = markerData;
     return marker
 }
+class Marker {
+    constructor() {
+        this.coordinates = coordinates;
+        this.icon = icon;
+        this.clickedIcon = clickedIcon;
+        this.id = id;
+        this.name = name;
+        this.isClicked = false;
+        this.markerData = {
+            id: this.id,
+            name: this.name
+        };
+        this.createMarker();
+    }
+    createMarker(){
+        let marker = L.marker(coord, { icon: icon }).addTo(map);
+        var isClicked = false;
+        marker.on('click', function(e) {
+            console.log("click");
+            isClicked = !isClicked;
+            if (isClicked) {
+                console.log("it is clicked");
+                marker.setIcon(clickedicon)
+                console.log("marker data: " + markerData.id + " " + markerData.name);
+            }
+            else {
+                console.log("it is not clicked");
+                marker.setIcon(icon)
+            }
+        });
+        if(selectedRows == id){
+            marker.setIcon(clickedicon)
+        }
+        else {
+            marker.setIcon(icon)
+        }
+        return marker
+    }
+    moveMarker(){
 
+    }
+}
 // Example usage
 
 // var example = L.icon({
