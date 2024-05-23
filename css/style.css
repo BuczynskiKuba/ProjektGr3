@@ -83,6 +83,10 @@ main {
   transition: 0.25s;
   border: #1d1d1d solid 1px;
 }
+.table table thead .buttons {
+  display: flex;
+  justify-content: center;
+}
 .table table tbody tr {
   background-color: var(--color-2);
 }

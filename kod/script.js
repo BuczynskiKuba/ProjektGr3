@@ -11,6 +11,8 @@ let selectedRows = [-1, -1];
 let markers = []; //tej tablicy użyjemy do czyszczenia danych
 let distances = []
 let selectedRowID = 0;
+let sortBy = "none" // po jakim polu maja byc sortowane dane; 
+let sortAsc = true;
 
 // pobieranie danych z API
 const getData = async (url) => {
@@ -37,6 +39,8 @@ const loop = async () => {
     // pobranie danych 
     let data = await getData(server);
 
+    data = sortByField(data, sortBy, sortAsc);
+
     clearMarkers();
     // dodawanie tabeli do html'a 
     tbody.innerHTML = tableGenerator(data, selectedRows)
@@ -46,11 +50,22 @@ const loop = async () => {
     selectTableRows(); // odswiezanie zaznaczania dla nowych rekodów w tabeli;
 
     // pobranie elementów z html'a
-    let sortButtons = document.querySelectorAll('.tableHead img')
-    
-    sortButtons.forEach(element =>{
+    let sortButtonsASC = document.querySelectorAll('.asc')
+    let sortButtonsDESC = document.querySelectorAll('.desc')
+
+    sortButtonsASC.forEach(element =>{
         element.addEventListener('click', () => {
-            console.log(element.id);
+            sortBy = element.id    
+            sortAsc = true;
+            loop()
+        })
+    })
+
+    sortButtonsDESC.forEach(element =>{
+        element.addEventListener('click', () => {
+            sortBy = element.id
+            sortAsc = false;
+            loop()
         })
     })
 
@@ -267,6 +282,20 @@ const selectTableRows = () => {
     });
 }
 
+const sortByField = (array, field, ascending = true) => {
+
+    ascending = !ascending;
+
+    return array.sort((a, b) => {
+        if (a[field] > b[field]) {
+            return ascending ? 1 : -1;
+        } else if (a[field] < b[field]) {
+            return ascending ? -1 : 1;
+        } else {
+            return 0;
+        }
+    });
+}
 
 // inicjalizacja wszystkiego na starcie;
 loop()
