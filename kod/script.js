@@ -62,11 +62,13 @@ const loop = async () => {
 const intervalId = setInterval(loop, 5000)
 
 const clearMarkers = () => {
-    markers.forEach(function(marker) {
-        map.removeLayer(marker);
-    });
-}
-//generator markerów na mapie
+    markers = [];
+    // markers.forEach(function(markerInstance) {
+    //     const marker = markerInstance;
+    //     map.removeLayer(marker);
+    // });
+};
+//generator markerów
 const markersGenerator = (data, selectedRows) => {
     let type = '';
     data.forEach(element => {
@@ -92,12 +94,15 @@ const markersGenerator = (data, selectedRows) => {
                 iconClicked = unknownIconClicked;
                 break;
         }
-        marker = addMarker(elementPos, icon, iconClicked, selectedRows, element.Id, element.Name);
+        // marker = addMarker(elementPos, icon, iconClicked, selectedRows, element.Id, element.Name);
+        marker = new Marker(elementPos, icon, iconClicked, element.Id, element.Name)
         markers.push(marker)
-        
     })
     console.log(markers);
     return markers;
+}
+const updateAllMarkers = (data) => {
+
 }
 const tableGenerator = (data, selectedRows) => {
     // id wierszy tabeli

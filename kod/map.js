@@ -13,78 +13,87 @@ function addMarkerGeneric(coordinates) {
 
     return marker
 }
-function addMarker(coordinates, icon, clickedicon, selectedRows, id, name) {
-    let markerData = {
-        id: id,
-        name: name
-    };
-    let coord = coordinates
-    let marker = L.marker(coord, { icon: icon }).addTo(map);
-    var isClicked = false;
-    marker.on('click', function(e) {
-        console.log("click");
-        isClicked = !isClicked;
-        if (isClicked) {
-            console.log("it is clicked");
-            marker.setIcon(clickedicon)
-            console.log("marker data: " + markerData.id + " " + markerData.name);
-        }
-        else {
-            console.log("it is not clicked");
-            marker.setIcon(icon)
-        }
-    });
-    if(selectedRows == id){
-        marker.setIcon(clickedicon)
-    }
-    else {
-        marker.setIcon(icon)
-    }
-    marker.options.customData = markerData;
-    return marker
-}
+// function addMarker(coordinates, icon, clickedicon, selectedRows, id, name) {
+//     let markerData = {
+//         id: id,
+//         name: name
+//     };
+//     let coord = coordinates
+//     let marker = L.marker(coord, { icon: icon }).addTo(map);
+//     var isClicked = false;
+//     marker.on('click', function(e) {
+//         console.log("click");
+//         isClicked = !isClicked;
+//         if (isClicked) {
+//             console.log("it is clicked");
+//             marker.setIcon(clickedicon)
+//             console.log("marker data: " + markerData.id + " " + markerData.name);
+//         }
+//         else {
+//             console.log("it is not clicked");
+//             marker.setIcon(icon)
+//         }
+//     });
+//     if(selectedRows == id){
+//         marker.setIcon(clickedicon)
+//     }
+//     else {
+//         marker.setIcon(icon)
+//     }
+//     marker.options.customData = markerData;
+//     return marker
+// }
 class Marker {
-    constructor() {
+    constructor(coordinates, icon, clickedIcon, id, name) {
         this.coordinates = coordinates;
         this.icon = icon;
         this.clickedIcon = clickedIcon;
-        this.id = id;
-        this.name = name;
-        this.isClicked = false;
         this.markerData = {
-            id: this.id,
-            name: this.name
+            id: id,
+            name: name
         };
-        this.createMarker();
+        this.isClicked = false;
+        this.marker = this.createMarker();
     }
-    createMarker(){
-        let marker = L.marker(coord, { icon: icon }).addTo(map);
-        var isClicked = false;
-        marker.on('click', function(e) {
-            console.log("click");
-            isClicked = !isClicked;
-            if (isClicked) {
-                console.log("it is clicked");
-                marker.setIcon(clickedicon)
-                console.log("marker data: " + markerData.id + " " + markerData.name);
-            }
-            else {
-                console.log("it is not clicked");
-                marker.setIcon(icon)
-            }
-        });
-        if(selectedRows == id){
-            marker.setIcon(clickedicon)
-        }
-        else {
-            marker.setIcon(icon)
-        }
-        return marker
-    }
-    moveMarker(){
 
+    createMarker() {
+        let marker = L.marker(this.coordinates, { icon: this.icon }).addTo(map);
+        marker.on('click', this.handleClick.bind(this));
+
+        if (this.selectedRows === this.markerData.id) {
+            marker.setIcon(this.clickedIcon);
+        } else {
+            marker.setIcon(this.icon);
+        }
+
+        marker.options.customData = this.markerData;
+        return marker;
+    }
+    handleClick() {
+        console.log("click");
+        this.isClicked = !this.isClicked;
+        if (this.isClicked) {
+            console.log("it is clicked");
+            this.marker.setIcon(this.clickedIcon);
+            console.log("marker data: " + this.markerData.id + " " + this.markerData.name);
+        } else {
+            console.log("it is not clicked");
+            this.marker.setIcon(this.icon);
+        }
+    }
+    updateMarker(coordinates){
+        this.marker.setLatLng(coordinates)
+    }
+    destroyMarker(){
+        this.marker.remove();
+    }
+    getMarker() {
+        return this.marker;
     }
 }
+
+// let myMarker = new Marker(coordinates, icon, clickedIcon, selectedRows, id, name);
+// let marker = myMarker.getMarker();
 // Example usage
 
 // var example = L.icon({
