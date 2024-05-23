@@ -14,6 +14,8 @@ let selectedRowID = 0;
 let sortBy = "none" // po jakim polu maja byc sortowane dane; 
 let sortAsc = true;
 
+let data = []; // 
+
 // pobieranie danych z API
 const getData = async (url) => {
     try {
@@ -33,20 +35,24 @@ const getData = async (url) => {
         console.error('Wystąpił błąd:', error);
     }
 }
+
+const init = async () => {
+    data = await getData(server);
+    console.log(data);
+    markersGenerator(data)
+}
+
+
 // taki Main, tutaj sie wykonuja rzeczy w petli co 10s
 const loop = async () => {
     // pobranie danych 
-    let data = await getData(server);
+    data = await getData(server);
 
     data = sortByField(data, sortBy, sortAsc);
 
-    clearMarkers(data);
     // dodawanie tabeli do html'a 
     tbody.innerHTML = tableGenerator(data, selectedRows)
     // dodawanie markerów na mapę
-    markersGenerator(data, selectedRows);
-
-    selectTableRows(); // odswiezanie zaznaczania dla nowych rekodów w tabeli;
 
     // pobranie elementów z html'a
     let sortButtonsASC = document.querySelectorAll('.asc')
@@ -68,8 +74,8 @@ const loop = async () => {
         })
     })
 
-
-    
+    updateAllMarkers(data)
+    selectTableRows(); // odswiezanie zaznaczania dla nowych rekodów w tabeli;
 };
 
 // Odswiezanie loopa
@@ -80,26 +86,26 @@ const clearMarkers = (data) => {
     markers = [];
 };
 //generator markerów
-const markersGenerator = (data, selectedRows) => {
-    let type = '';
+const markersGenerator = (data) => {
+
+    
     clearMarkers();
     data.forEach(element => {
-        let marker;
         var elementPos = [element.Position.Lat, element.Position.Lon]
         let icon;
         let iconClicked;
         switch(element.Type){
             case "Portable":
-                icon = portableIcon;
-                iconClicked = portableIconClicked;
+                icon = '../res/icons/mapIcons/portablemarker.png';
+                iconClicked = '../res/icons/mapIcons/portablemarkerclicked.png';
                 break;
             case "Car":
-                icon = carIcon;
-                iconClicked = carIconClicked;
+                icon = '../res/icons/mapIcons/carmarker.png';
+                iconClicked = '../res/icons/mapIcons/carmarkerclicked.png';
                 break;
             case "BaseStation":
-                icon = baseStationIcon;
-                iconClicked = baseStationIconClicked;
+                icon = '../res/icons/mapIcons/basestationmarker.png';
+                iconClicked = '../res/icons/mapIcons/basestationmarkerclicked.png';
                 break;
             default:
                 icon = unknownIcon;
@@ -107,16 +113,25 @@ const markersGenerator = (data, selectedRows) => {
                 break;
         }
         // marker = addMarker(elementPos, icon, iconClicked, selectedRows, element.Id, element.Name);
-        marker = new Marker(elementPos, icon, iconClicked, element.Id, element.Name)
+        //marker = new Marker(elementPos, icon, iconClicked, element.Id - 1, element.Name)
+        const marker = new Marker(51.505, -0.09, icon, iconClicked, element.Id - 1, element.Name);
         markers.push(marker)
     })
-    console.log(markers);
+    //console.log(markers);
     return markers;
 }
 const updateAllMarkers = (data) => {
     markers.forEach(marker => {
-        marker.updateMarker([data.Position.Lat, data.Position.Lon]);
+        let id = marker.elementId;
+        marker.updatePosition(data[id].Position.Lat, data[id].Position.Lon)
+
+        // todo
+        // zrobienie jednej funkcji w której bedzie sie zmieniac stan selected
+        // i ta funkcja potem bedzie aktualizowac tabele i mape na raz
+        // a nie osobno wszystko dziala!
+
     })
+
 }
 const tableGenerator = (data, selectedRows) => {
     // id wierszy tabeli
@@ -280,15 +295,15 @@ const selectTableRows = () => {
                 // Zaznaczamy nowy wiersz i dodajemy jego ID do selectedRows
                 element.classList.add('selected');
                 selectedRows.push(element.id);
-                calculateDistance(selectedRows);
             }
+            updateAllMarkers(data)
         });
     });
 }
 
 const sortByField = (array, field, ascending = true) => {
 
-    ascending = !ascending;
+    ascending != ascending // nie chce mi sie podmieniac icon żeby sie zgadzało
 
     return array.sort((a, b) => {
         if (a[field] > b[field]) {
@@ -301,5 +316,6 @@ const sortByField = (array, field, ascending = true) => {
     });
 }
 
-// inicjalizacja wszystkiego na starcie;
+
+init()
 loop()

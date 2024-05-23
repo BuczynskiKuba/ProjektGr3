@@ -54,6 +54,8 @@ main {
 }
 .table{
     width: clamp(500px, 80%, 1000px);
+    display: flex;
+    justify-content: center;
     table {
         
         border-radius: 15px;
@@ -67,7 +69,7 @@ main {
         }
 
         img{
-            width: 2vw;
+            width: 2vh;
         }
 
 

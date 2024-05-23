@@ -58,6 +58,8 @@ main {
 
 .table {
   width: clamp(500px, 80%, 1000px);
+  display: flex;
+  justify-content: center;
 }
 .table table {
   border-radius: 15px;
@@ -70,7 +72,7 @@ main {
   border: 1px solid #1d1d1d;
 }
 .table table img {
-  width: 2vw;
+  width: 2vh;
 }
 .table table thead tr {
   background-color: var(--color-3);
