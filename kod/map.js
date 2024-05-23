@@ -13,11 +13,11 @@ function addMarkerGeneric(coordinates) {
 
     return marker
 }
-function addMarker(coordinates, icon, clickedicon) {
-    // let markerData = {
-    //     id: "0000",
-    //     name: "test"
-    // };
+function addMarker(coordinates, icon, clickedicon, selectedRows, id, name) {
+    let markerData = {
+        id: id,
+        name: name
+    };
     let coord = coordinates
     let marker = L.marker(coord, { icon: icon }).addTo(map);
     var isClicked = false;
@@ -27,14 +27,19 @@ function addMarker(coordinates, icon, clickedicon) {
         if (isClicked) {
             console.log("it is clicked");
             marker.setIcon(clickedicon)
-            console.log("marker data: " + markerData.id + markerData.name);
+            console.log("marker data: " + markerData.id + " " + markerData.name);
         }
         else {
             console.log("it is not clicked");
             marker.setIcon(icon)
         }
     });
-
+    if(selectedRows == id){
+        marker.setIcon(clickedicon)
+    }
+    else {
+        marker.setIcon(icon)
+    }
     marker.options.customData = markerData;
     return marker
 }

@@ -118,7 +118,7 @@ const markersGenerator = (data, selectedRows) => {
                 iconClicked = unknownIconClicked;
                 break;
         }
-        marker = addMarker(elementPos, icon, iconClicked);
+        marker = addMarker(elementPos, icon, iconClicked, selectedRows, element.Id, element.Name);
         markers.push(marker)
         
     })
