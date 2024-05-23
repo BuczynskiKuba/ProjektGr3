@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Montserrat", sans-serif;
+    //zabije cwela który wrzucił tutaj stylowanie czcionki
 }
 
 :root {
@@ -11,6 +11,7 @@
     --color-3: #ADACB5;
     --color-4: #2D3142;
     --color-5: #B0D7FF;
+    font-family: "Montserrat", sans-serif;
 }
 
 body {
@@ -19,65 +20,68 @@ body {
 
 main {
     width: 100vw;
-    height: auto;
+    min-height: 100vh;
     display: flex;
-    flex-direction: column;
     background-color: var(--color-4);
     align-items: center;
 }
 
-.table, .map {
-    display: flex;
-    justify-content: center;
-    width: 80vw;
-    padding: 2vw 2vh;
-<<<<<<< Updated upstream
+.wrappper {
+    width: 50vw;
 }
-
-.table {
-    height: 70vh;
-
-=======
-  }
-  
-  .table{
-    height: 60vh;
-  
->>>>>>> Stashed changes
+.left-side {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.title {
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.title-text {
+    padding: 10px 0;
+}
+.desc-text {
+    width: 80%;
+    .text {
+        font-weight: 400;
+    }
+}
+.table{
+    width: clamp(500px, 80%, 1000px);
     table {
         width: 100%;
         overflow: hidden;
         border-radius: 15px;
     }
-
     table, th, td {
         border: solid 1px black;
         border-collapse: collapse;
     }
-
     td {
         text-align: center;
-
         img {
             width: 50%;
             height: auto;
         }
+        &:nth-child(4){
+            width: 116px;
+            // background: red;
+            }
     }
-
     td, th {
         padding: 5px;
     }
-
     th {
         background-color: var(--color-3);
     }
-
     tr {
-<<<<<<< Updated upstream
-        background-color: var(--color-1);
-=======
       background-color: var(--color-1);
-      
       th{
         .tableHead{
             background: red;
@@ -91,33 +95,30 @@ main {
                 
             }
             img{
-                width: 3vw;
+                // width: clamp(20px, 2vw, 50px);
+                width: 50%;
+                height: auto;
             }
         }
       }
 
->>>>>>> Stashed changes
     }
 
     .selected {
         background-color: var(--color-5);
     }
-<<<<<<< Updated upstream
-}
-
-.map {
-    height: 30vh;
-=======
-  }
-  
-  .map {
-    height: 40vh;
->>>>>>> Stashed changes
-    border-radius: 25px;
 }
 
 #map {
-    height: 100%;
-    width: 100%;
+    height: 100vh;
+    width: 50vw;
     border-radius: 20px;
+}
+
+.marker-preview {
+    position: absolute;
+    z-index: 99;
+    background-color: wheat;
+    aspect-ratio: 2/3;
+    width: 200px;
 }

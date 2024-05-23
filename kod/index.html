@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="">
     <title>Document</title>
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/universal.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
     integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
     crossorigin=""/>
@@ -19,12 +20,21 @@
 </head>
 <body>
     <main>
-        <div class="map">
-            <div id="map"></div>
+        <div class="left-side wrapper">
+            <div class="title fn-white">
+                <div class="title-text fn-kpd-reg">
+                    <h1>http:localhost:8080/radios</h1>
+                </div>
+                <div class="desc-text fn-trebuchet">
+                    <span class="text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel error, numquam officia hic, aperiam blanditiis impedit qui aliquam in odit maiores sequi necessitatibus corrupti? Sed numquam corrupti alias vel dolore.</span>
+                </div>
+            </div>
+            <div class="table">
+                <!-- tu będzie tabelka -->
+            </div>
         </div>
-
-        <div class="table">
-            <!-- tu będzie tabelka -->
+        <div class="right-side wrapper">
+            <div id="map"></div>
         </div>
     </main>
     <script src="map.js"></script>
