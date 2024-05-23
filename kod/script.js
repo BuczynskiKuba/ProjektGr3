@@ -238,8 +238,6 @@ const selectTableRows = () => {
     tableRows.forEach(element => {
         element.addEventListener('click', () => {
 
-            calculateDistance(selectedRows);
-
             // tutaj usuwamy zaznaczenie po kliknieciu na zaznaczony
             if(element.classList.contains("selected")){
                 
@@ -263,6 +261,7 @@ const selectTableRows = () => {
                 // Zaznaczamy nowy wiersz i dodajemy jego ID do selectedRows
                 element.classList.add('selected');
                 selectedRows.push(element.id);
+                calculateDistance(selectedRows);
             }
         });
     });

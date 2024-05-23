@@ -55,57 +55,60 @@ main {
 .table{
     width: clamp(500px, 80%, 1000px);
     table {
-        width: 100%;
-        overflow: hidden;
+        
         border-radius: 15px;
-    }
-    table, th, td {
-        border: solid 1px black;
-        border-collapse: collapse;
-    }
-    td {
-        text-align: center;
-        img {
-            width: 50%;
-            height: auto;
-        }
-        &:nth-child(4){
-            width: 116px;
-            // background: red;
-            }
-    }
-    td, th {
-        padding: 5px;
-    }
-    th {
-        background-color: var(--color-3);
-    }
-    tr {
-      background-color: var(--color-1);
-      th{
-        .tableHead{
-            background: red;
-            display: flex;
-            align-items: center;
+        border-collapse: separate;
+        border-spacing: 0;
+        overflow: hidden;
+        border: 2px solid #1d1d1d;
 
-            .text{
-                display: flex;
-                height: 100%;
-                background: green;               
-                
+        tr, td, th{
+            border: 1px solid #1d1d1d; 
+        }
+
+        img{
+            width: 2vw;
+        }
+
+
+
+        thead{
+            tr{
+                background-color:   var(--color-3);
             }
-            img{
-                // width: clamp(20px, 2vw, 50px);
-                width: 50%;
-                height: auto;
+
+            th{
+                img{
+                    transition: 0.25s;
+                    border-radius: 10px;
+                }
+
+                img:hover{
+                    transition: 0.25s;
+                    border: #1d1d1d solid 1px;
+                }
             }
         }
-      }
 
-    }
+        tbody{
 
-    .selected {
-        background-color: var(--color-5);
+            tr{
+                background-color: var(--color-2);
+
+                td{
+                    text-align: center;
+                    padding: 1vh 1vw;
+                }
+
+                td:first-child{
+                   font-weight: bold; 
+                }
+            }
+
+            .selected{
+                background-color: var(--color-5);
+            }
+        }
     }
 }
 
