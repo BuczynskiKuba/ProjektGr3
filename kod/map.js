@@ -13,13 +13,87 @@ function addMarkerGeneric(coordinates) {
 
     return marker
 }
-function addMarker(coordinates, icon) {
-    let coord = coordinates
-    let marker = L.marker(coord, { icon: icon }).addTo(map);
+// function addMarker(coordinates, icon, clickedicon, selectedRows, id, name) {
+//     let markerData = {
+//         id: id,
+//         name: name
+//     };
+//     let coord = coordinates
+//     let marker = L.marker(coord, { icon: icon }).addTo(map);
+//     var isClicked = false;
+//     marker.on('click', function(e) {
+//         console.log("click");
+//         isClicked = !isClicked;
+//         if (isClicked) {
+//             console.log("it is clicked");
+//             marker.setIcon(clickedicon)
+//             console.log("marker data: " + markerData.id + " " + markerData.name);
+//         }
+//         else {
+//             console.log("it is not clicked");
+//             marker.setIcon(icon)
+//         }
+//     });
+//     if(selectedRows == id){
+//         marker.setIcon(clickedicon)
+//     }
+//     else {
+//         marker.setIcon(icon)
+//     }
+//     marker.options.customData = markerData;
+//     return marker
+// }
+class Marker {
+    constructor(coordinates, icon, clickedIcon, id, name, clicked) {
+        this.coordinates = coordinates;
+        this.icon = icon;
+        this.clickedIcon = clickedIcon;
+        this.markerData = {
+            id: id,
+            name: name
+        };
+        this.isClicked = clicked;
+        this.marker = this.createMarker();
+    }
 
-    return marker
+    createMarker() {
+        let marker = L.marker(this.coordinates, { icon: this.icon }).addTo(map);
+        marker.on('click', this.handleClick.bind(this));
+
+        if (this.selectedRows === this.markerData.id) {
+            marker.setIcon(this.clickedIcon);
+        } else {
+            marker.setIcon(this.icon);
+        }
+
+        marker.options.customData = this.markerData;
+        return marker;
+    }
+    handleClick() {
+        console.log("click");
+        this.isClicked = !this.isClicked;
+        if (this.isClicked) {
+            console.log("it is clicked");
+            this.marker.setIcon(this.clickedIcon);
+            console.log("marker data: " + this.markerData.id + " " + this.markerData.name);
+        } else {
+            console.log("it is not clicked");
+            this.marker.setIcon(this.icon);
+        }
+    }
+    updateMarker(coordinates){
+        this.marker.setLatLng(coordinates)
+    }
+    destroyMarker(){
+        this.marker.remove();
+    }
+    getMarker() {
+        return this.marker;
+    }
 }
 
+// let myMarker = new Marker(coordinates, icon, clickedIcon, selectedRows, id, name);
+// let marker = myMarker.getMarker();
 // Example usage
 
 // var example = L.icon({
@@ -28,50 +102,7 @@ function addMarker(coordinates, icon) {
 //     iconAnchor: [12, 41], // point of the icon which will correspond to marker's location
 //     popupAnchor: [-3, -41] // point from which the popup should open relative to the iconAnchor
 // });
-const size = [40,40];
-const anchor = [20,40];
-const popup = [0,0];
-const baseStationIcon = L.icon({
-    iconUrl: '../res/icons/mapIcons/basestationmarker.png',
-    iconSize: size,
-    iconAnchor: anchor,
-    popupAnchor: popup
-});
 
-const carIcon = L.icon({
-    iconUrl: '../res/icons/mapIcons/carmarker.png',
-    iconSize: size,
-    iconAnchor: anchor,
-    popupAnchor: popup
-});
-
-const portableIcon = L.icon({
-    iconUrl: '../res/icons/mapIcons/portablemarker.png',
-    iconSize: size,
-    iconAnchor: anchor,
-    popupAnchor: popup
-});
-
-const baseStationIconClicked = L.icon({
-    iconUrl: '../res/icons/mapIcons/basestationmarkerclicked.png',
-    iconSize: size,
-    iconAnchor: anchor,
-    popupAnchor: popup
-});
-
-const carIconClicked = L.icon({
-    iconUrl: '../res/icons/mapIcons/carmarkerclicked.png',
-    iconSize: size,
-    iconAnchor: anchor,
-    popupAnchor: popup
-});
-
-const portableIconClicked = L.icon({
-    iconUrl: '../res/icons/mapIcons/portablemarkerclicked.png',
-    iconSize: size,
-    iconAnchor: anchor,
-    popupAnchor: popup
-});
 //DEBUG
 //EXAMPLES
 // var coordinates = [51.505, -1.09];

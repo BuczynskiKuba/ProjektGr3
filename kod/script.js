@@ -2,13 +2,17 @@
 const server = 'http://localhost:8080/radios/';
 
 // pobranie z html diva o klasie .table gdzie wrzuca sie tabela
-const table = document.querySelector('.table');
+const tbody = document.querySelector('.table table tbody');
 
 // aktualnie zaznaczone row'y
 // gdyz tabela co 10s sie odswieza dlatego trzeba zapisac co bylo
 // klikniete
-let selectedRows = [];
-var markers = []; //tej tablicy użyjemy do czyszczenia danych
+let selectedRows = [-1, -1];
+let markers = []; //tej tablicy użyjemy do czyszczenia danych
+let distances = []
+let selectedRowID = 0;
+let sortBy = "none" // po jakim polu maja byc sortowane dane; 
+let sortAsc = true;
 
 // pobieranie danych z API
 const getData = async (url) => {
@@ -29,60 +33,56 @@ const getData = async (url) => {
         console.error('Wystąpił błąd:', error);
     }
 }
-
-
 // taki Main, tutaj sie wykonuja rzeczy w petli co 10s
 const loop = async () => {
     // pobranie danych 
     let data = await getData(server);
 
-    clearMarkers();
+    data = sortByField(data, sortBy, sortAsc);
+
+    clearMarkers(data);
     // dodawanie tabeli do html'a 
-    table.innerHTML = tableGenerator(data, selectedRows)
+    tbody.innerHTML = tableGenerator(data, selectedRows)
     // dodawanie markerów na mapę
     markersGenerator(data, selectedRows);
-    let tableRows = document.querySelectorAll('.tableRow');
 
-    tableRows.forEach(element => {
+    selectTableRows(); // odswiezanie zaznaczania dla nowych rekodów w tabeli;
+
+    // pobranie elementów z html'a
+    let sortButtonsASC = document.querySelectorAll('.asc')
+    let sortButtonsDESC = document.querySelectorAll('.desc')
+
+    sortButtonsASC.forEach(element =>{
         element.addEventListener('click', () => {
-            console.log(selectedRows);
-            
-            // po kliknieciu jest dodawana klasa selected do rowa tabeli i do 
-            // tablicy selectedRows jest dodawany id row'a
-            // a jesli row juz zawiera selected to zostaje usuniety z row'a i arraya
-            if(element.classList.contains("selected")){
-                element.classList.remove('selected')
-                //usuniecie z selectedRows danego id
-                selectedRows[0] = -1;
-
-            }else{
-                // u
-                tableRows.forEach( row => {
-                    if(row.classList.contains("selected")){
-                        row.classList.remove("selected")
-                    }
-                })
-                element.classList.add('selected')
-                selectedRows[0] = element.id;
-            
-            }
+            sortBy = element.id    
+            sortAsc = true;
+            loop()
         })
     })
-};
 
-loop()
+    sortButtonsDESC.forEach(element =>{
+        element.addEventListener('click', () => {
+            sortBy = element.id
+            sortAsc = false;
+            loop()
+        })
+    })
+
+
+    
+};
 
 // Odswiezanie loopa
 const intervalId = setInterval(loop, 5000)
 
-const clearMarkers = () => {
-    markers.forEach(function(marker) {
-        map.removeLayer(marker);
-    });
-}
-//generator markerów na mapie
+const clearMarkers = (data) => {
+    markers.forEach(marker => marker.destroyMarker());
+    markers = [];
+};
+//generator markerów
 const markersGenerator = (data, selectedRows) => {
     let type = '';
+    clearMarkers();
     data.forEach(element => {
         let marker;
         var elementPos = [element.Position.Lat, element.Position.Lon]
@@ -106,43 +106,24 @@ const markersGenerator = (data, selectedRows) => {
                 iconClicked = unknownIconClicked;
                 break;
         }
-        marker = addMarker(elementPos, icon);
+        // marker = addMarker(elementPos, icon, iconClicked, selectedRows, element.Id, element.Name);
+        marker = new Marker(elementPos, icon, iconClicked, element.Id, element.Name)
         markers.push(marker)
-        var isClicked = false;
-        marker.on('click', function(e) {
-            console.log("click");
-            isClicked = !isClicked;
-            if (isClicked) {
-                console.log("it is clicked");
-                marker.setIcon(iconClicked)
-            }
-            else {
-                console.log("it is not clicked");
-                marker.setIcon(icon)
-            }
-        });
     })
     console.log(markers);
     return markers;
+}
+const updateAllMarkers = (data) => {
+    markers.forEach(marker => {
+        marker.updateMarker([data.Position.Lat, data.Position.Lon]);
+    })
 }
 const tableGenerator = (data, selectedRows) => {
     // id wierszy tabeli
     let deviceId = 0;
 
     // html tabeli
-
-    let html = `
-        <table class="rounded">
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Type</th>
-                <th>Serial Number</th>
-                <th>Strenth</th>
-                <th>Battery Level</th>
-                <th>Working Mode</th>
-            </tr>
-    `;
+    let html = ``;
 
 
     // petla for po pobranym obiekcie z danymi
@@ -230,21 +211,95 @@ const tableGenerator = (data, selectedRows) => {
 
         // dodawanie kolejnych wierszy do tabeli
         html += `
-            <tr id='` + deviceId + `' class='tableRow ` + selected +`'>
-                <td>` + element.Id + `</td>
-                <td>` + element.Name + `</td>
-                <td><img src='` + type + `'/></td>
-                <td>` + element.SerialNumber + `</td>
-                <td><img src='` + strength + `'/></td>
-                <td><img src='` + batteryLevel + `'/></td>
-                <td><img src='` + workingMode + `'/></td>
+            <tr id=' ${deviceId} ' class='tableRow ${selected}'>
+                <td>${element.Id}</td>
+                <td>${element.Name}</td>
+                <td><img src='${type}'/></td>
+                <td>${element.SerialNumber}</td>
+                <td><img src='${strength}'/></td>
+                <td><img src='${batteryLevel}'/></td>
+                <td><img src='${workingMode}'/></td>
             </tr>
         `
         // inkrementacja id wiersza 
         deviceId++;
     });
 
-    html += '</table>'
-
     return html;
 }
+
+const calculateDistance = async (idArr) => {
+
+    idArr.forEach( id => {
+        if(id == -1){
+            console.log("Select Two Devices");
+            return "Select Two Devices"
+        }
+    })
+
+    console.log("git");
+
+    let data = await getData(server);
+    let xA,xB,yA,yB
+
+
+
+
+
+
+    return 0
+}
+
+const selectTableRows = () => {
+
+    let tableRows = document.querySelectorAll('.tableRow');
+
+    tableRows.forEach(element => {
+        element.addEventListener('click', () => {
+
+            // tutaj usuwamy zaznaczenie po kliknieciu na zaznaczony
+            if(element.classList.contains("selected")){
+                
+                element.classList.remove('selected');
+                // usuwanie id z selectedRows po odznaczeniu
+                const index = selectedRows.indexOf(element.id);
+                if (index > -1) {
+                    selectedRows.splice(index, 1);
+                }
+            } else {
+                //
+                if (selectedRows.length >= 2) {
+                    // jeśli mamy juz 2 zaznaczone usuwamy "najstarsze" zaznaczenie
+                    const oldestSelected = selectedRows.shift(); // usuwanie pierwszego elementu
+                    // wybiera wiersz z którego zostanie usunieta klasa selected
+                    const rowToDeselect = Array.from(tableRows).find(row => row.id === oldestSelected);
+                    if (rowToDeselect) {
+                        rowToDeselect.classList.remove('selected');
+                    }
+                }
+                // Zaznaczamy nowy wiersz i dodajemy jego ID do selectedRows
+                element.classList.add('selected');
+                selectedRows.push(element.id);
+                calculateDistance(selectedRows);
+            }
+        });
+    });
+}
+
+const sortByField = (array, field, ascending = true) => {
+
+    ascending = !ascending;
+
+    return array.sort((a, b) => {
+        if (a[field] > b[field]) {
+            return ascending ? 1 : -1;
+        } else if (a[field] < b[field]) {
+            return ascending ? -1 : 1;
+        } else {
+            return 0;
+        }
+    });
+}
+
+// inicjalizacja wszystkiego na starcie;
+loop()
