@@ -44,7 +44,7 @@ function addMarkerGeneric(coordinates) {
 //     return marker
 // }
 class Marker {
-    constructor(coordinates, icon, clickedIcon, id, name) {
+    constructor(coordinates, icon, clickedIcon, id, name, clicked) {
         this.coordinates = coordinates;
         this.icon = icon;
         this.clickedIcon = clickedIcon;
@@ -52,7 +52,7 @@ class Marker {
             id: id,
             name: name
         };
-        this.isClicked = false;
+        this.isClicked = clicked;
         this.marker = this.createMarker();
     }
 

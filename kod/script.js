@@ -33,7 +33,6 @@ const getData = async (url) => {
         console.error('Wystąpił błąd:', error);
     }
 }
-
 // taki Main, tutaj sie wykonuja rzeczy w petli co 10s
 const loop = async () => {
     // pobranie danych 
@@ -41,7 +40,7 @@ const loop = async () => {
 
     data = sortByField(data, sortBy, sortAsc);
 
-    clearMarkers();
+    clearMarkers(data);
     // dodawanie tabeli do html'a 
     tbody.innerHTML = tableGenerator(data, selectedRows)
     // dodawanie markerów na mapę
@@ -76,16 +75,14 @@ const loop = async () => {
 // Odswiezanie loopa
 const intervalId = setInterval(loop, 5000)
 
-const clearMarkers = () => {
+const clearMarkers = (data) => {
+    markers.forEach(marker => marker.destroyMarker());
     markers = [];
-    // markers.forEach(function(markerInstance) {
-    //     const marker = markerInstance;
-    //     map.removeLayer(marker);
-    // });
 };
 //generator markerów
 const markersGenerator = (data, selectedRows) => {
     let type = '';
+    clearMarkers();
     data.forEach(element => {
         let marker;
         var elementPos = [element.Position.Lat, element.Position.Lon]
@@ -117,7 +114,9 @@ const markersGenerator = (data, selectedRows) => {
     return markers;
 }
 const updateAllMarkers = (data) => {
-
+    markers.forEach(marker => {
+        marker.updateMarker([data.Position.Lat, data.Position.Lon]);
+    })
 }
 const tableGenerator = (data, selectedRows) => {
     // id wierszy tabeli
