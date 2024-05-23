@@ -13,11 +13,11 @@ function addMarkerGeneric(coordinates) {
 
     return marker
 }
-function addMarker(coordinates, icon, clickedicon, data) {
-    let markerData = {
-        id: "0000",
-        name: "test"
-    };
+function addMarker(coordinates, icon, clickedicon) {
+    // let markerData = {
+    //     id: "0000",
+    //     name: "test"
+    // };
     let coord = coordinates
     let marker = L.marker(coord, { icon: icon }).addTo(map);
     var isClicked = false;
