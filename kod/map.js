@@ -13,10 +13,29 @@ function addMarkerGeneric(coordinates) {
 
     return marker
 }
-function addMarker(coordinates, icon) {
+function addMarker(coordinates, icon, clickedicon, data) {
+    let markerData = {
+        id: "0000",
+        name: "test"
+    };
     let coord = coordinates
     let marker = L.marker(coord, { icon: icon }).addTo(map);
+    var isClicked = false;
+    marker.on('click', function(e) {
+        console.log("click");
+        isClicked = !isClicked;
+        if (isClicked) {
+            console.log("it is clicked");
+            marker.setIcon(clickedicon)
+            console.log("marker data: " + markerData.id + markerData.name);
+        }
+        else {
+            console.log("it is not clicked");
+            marker.setIcon(icon)
+        }
+    });
 
+    marker.options.customData = markerData;
     return marker
 }
 
@@ -28,50 +47,7 @@ function addMarker(coordinates, icon) {
 //     iconAnchor: [12, 41], // point of the icon which will correspond to marker's location
 //     popupAnchor: [-3, -41] // point from which the popup should open relative to the iconAnchor
 // });
-const size = [40,40];
-const anchor = [20,40];
-const popup = [0,0];
-const baseStationIcon = L.icon({
-    iconUrl: '../res/icons/mapIcons/basestationmarker.png',
-    iconSize: size,
-    iconAnchor: anchor,
-    popupAnchor: popup
-});
 
-const carIcon = L.icon({
-    iconUrl: '../res/icons/mapIcons/carmarker.png',
-    iconSize: size,
-    iconAnchor: anchor,
-    popupAnchor: popup
-});
-
-const portableIcon = L.icon({
-    iconUrl: '../res/icons/mapIcons/portablemarker.png',
-    iconSize: size,
-    iconAnchor: anchor,
-    popupAnchor: popup
-});
-
-const baseStationIconClicked = L.icon({
-    iconUrl: '../res/icons/mapIcons/basestationmarkerclicked.png',
-    iconSize: size,
-    iconAnchor: anchor,
-    popupAnchor: popup
-});
-
-const carIconClicked = L.icon({
-    iconUrl: '../res/icons/mapIcons/carmarkerclicked.png',
-    iconSize: size,
-    iconAnchor: anchor,
-    popupAnchor: popup
-});
-
-const portableIconClicked = L.icon({
-    iconUrl: '../res/icons/mapIcons/portablemarkerclicked.png',
-    iconSize: size,
-    iconAnchor: anchor,
-    popupAnchor: popup
-});
 //DEBUG
 //EXAMPLES
 // var coordinates = [51.505, -1.09];

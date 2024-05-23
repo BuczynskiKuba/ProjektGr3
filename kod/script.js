@@ -118,21 +118,9 @@ const markersGenerator = (data, selectedRows) => {
                 iconClicked = unknownIconClicked;
                 break;
         }
-        marker = addMarker(elementPos, icon);
+        marker = addMarker(elementPos, icon, iconClicked);
         markers.push(marker)
-        var isClicked = false;
-        marker.on('click', function(e) {
-            console.log("click");
-            isClicked = !isClicked;
-            if (isClicked) {
-                console.log("it is clicked");
-                marker.setIcon(iconClicked)
-            }
-            else {
-                console.log("it is not clicked");
-                marker.setIcon(icon)
-            }
-        });
+        
     })
     console.log(markers);
     return markers;
