@@ -46,7 +46,7 @@ main {
 }
 
 .table {
-  height: 70vh;
+  height: 60vh;
 }
 .table table {
   width: 100%;
@@ -73,6 +73,19 @@ main {
 .table tr {
   background-color: var(--color-1);
 }
+.table tr th .tableHead {
+  background: red;
+  display: flex;
+  align-items: center;
+}
+.table tr th .tableHead .text {
+  display: flex;
+  height: 100%;
+  background: green;
+}
+.table tr th .tableHead img {
+  width: 3vw;
+}
 .table .table {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -86,7 +99,7 @@ main {
 }
 
 .map {
-  height: 30vh;
+  height: 40vh;
   border-radius: 25px;
 }
 

@@ -36,12 +36,24 @@ const loop = async () => {
     // pobranie danych 
     let data = await getData(server);
 
+    console.log(data);
+
     clearMarkers();
     // dodawanie tabeli do html'a 
     table.innerHTML = tableGenerator(data, selectedRows)
     // dodawanie markerów na mapę
     markersGenerator(data, selectedRows);
+
+    // pobranie elementów z html'a
     let tableRows = document.querySelectorAll('.tableRow');
+    let sortButtons = document.querySelectorAll('.tableHead img')
+    
+    sortButtons.forEach(element =>{
+        element.addEventListener('click', () => {
+            console.log(element.id);
+        })
+    })
+
 
     tableRows.forEach(element => {
         element.addEventListener('click', () => {
@@ -134,13 +146,34 @@ const tableGenerator = (data, selectedRows) => {
     let html = `
         <table class="rounded">
             <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Type</th>
-                <th>Serial Number</th>
-                <th>Strenth</th>
-                <th>Battery Level</th>
-                <th>Working Mode</th>
+                <th><div class="tableHead">
+                    <div class="text">Id</div>
+                    <img id = 'idId' src='../res/icons/sort/sort.png'></img>
+                </div></th>
+                <th><div class="tableHead">
+                    <div class="text">Name</div>
+                    <img id = 'idName' src='../res/icons/sort/sort.png'></img>
+                </div></th>
+                <th><div class="tableHead">
+                    <div class="text">Type</div>
+                    <img id = 'idType' src='../res/icons/sort/sort.png'></img>
+                </div></th>
+                <th><div class="tableHead">
+                    <div class="text">Serial Number</div>
+                    <img id = 'idSerialNumber' src='../res/icons/sort/sort.png'></img>
+                </div></th>
+                <th><div class="tableHead">
+                    <div class="text">Strength</div>
+                    <img id = 'idStrength' src='../res/icons/sort/sort.png'></img>
+                </div></th>
+                <th><div class="tableHead">
+                    <div class="text">Battery Level</div>
+                    <img id = 'idBatteryLevel' src='../res/icons/sort/sort.png'></img>
+                </div></th>
+                <th><div class="tableHead">
+                    <div class="text">Working Mode</div>
+                    <img id = 'idWorkingMode' src='../res/icons/sort/sort.png'></img>
+                </div></th>
             </tr>
     `;
 
@@ -230,14 +263,14 @@ const tableGenerator = (data, selectedRows) => {
 
         // dodawanie kolejnych wierszy do tabeli
         html += `
-            <tr id='` + deviceId + `' class='tableRow ` + selected +`'>
-                <td>` + element.Id + `</td>
-                <td>` + element.Name + `</td>
-                <td><img src='` + type + `'/></td>
-                <td>` + element.SerialNumber + `</td>
-                <td><img src='` + strength + `'/></td>
-                <td><img src='` + batteryLevel + `'/></td>
-                <td><img src='` + workingMode + `'/></td>
+            <tr id=' ${deviceId} ' class='tableRow ${selected}'>
+                <td>${element.Id}</td>
+                <td>${element.Name}</td>
+                <td><img src='${type}'/></td>
+                <td>${element.SerialNumber}</td>
+                <td><img src='${strength}'/></td>
+                <td><img src='${batteryLevel}'/></td>
+                <td><img src='${workingMode}'/></td>
             </tr>
         `
         // inkrementacja id wiersza 

@@ -31,11 +31,19 @@ main {
     justify-content: center;
     width: 80vw;
     padding: 2vw 2vh;
+<<<<<<< Updated upstream
 }
 
 .table {
     height: 70vh;
 
+=======
+  }
+  
+  .table{
+    height: 60vh;
+  
+>>>>>>> Stashed changes
     table {
         width: 100%;
         overflow: hidden;
@@ -65,16 +73,46 @@ main {
     }
 
     tr {
+<<<<<<< Updated upstream
         background-color: var(--color-1);
+=======
+      background-color: var(--color-1);
+      
+      th{
+        .tableHead{
+            background: red;
+            display: flex;
+            align-items: center;
+
+            .text{
+                display: flex;
+                height: 100%;
+                background: green;               
+                
+            }
+            img{
+                width: 3vw;
+            }
+        }
+      }
+
+>>>>>>> Stashed changes
     }
 
     .selected {
         background-color: var(--color-5);
     }
+<<<<<<< Updated upstream
 }
 
 .map {
     height: 30vh;
+=======
+  }
+  
+  .map {
+    height: 40vh;
+>>>>>>> Stashed changes
     border-radius: 25px;
 }
 
