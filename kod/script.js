@@ -2,13 +2,15 @@
 const server = 'http://localhost:8080/radios/';
 
 // pobranie z html diva o klasie .table gdzie wrzuca sie tabela
-const table = document.querySelector('.table');
+const tbody = document.querySelector('.table table tbody');
 
 // aktualnie zaznaczone row'y
 // gdyz tabela co 10s sie odswieza dlatego trzeba zapisac co bylo
 // klikniete
-let selectedRows = [];
-var markers = []; //tej tablicy użyjemy do czyszczenia danych
+let selectedRows = [-1, -1];
+let markers = []; //tej tablicy użyjemy do czyszczenia danych
+let distances = []
+let selectedRowID = 0;
 
 // pobieranie danych z API
 const getData = async (url) => {
@@ -30,22 +32,20 @@ const getData = async (url) => {
     }
 }
 
-
 // taki Main, tutaj sie wykonuja rzeczy w petli co 10s
 const loop = async () => {
     // pobranie danych 
     let data = await getData(server);
 
-    console.log(data);
-
     clearMarkers();
     // dodawanie tabeli do html'a 
-    table.innerHTML = tableGenerator(data, selectedRows)
+    tbody.innerHTML = tableGenerator(data, selectedRows)
     // dodawanie markerów na mapę
     markersGenerator(data, selectedRows);
 
+    selectTableRows(); // odswiezanie zaznaczania dla nowych rekodów w tabeli;
+
     // pobranie elementów z html'a
-    let tableRows = document.querySelectorAll('.tableRow');
     let sortButtons = document.querySelectorAll('.tableHead img')
     
     sortButtons.forEach(element =>{
@@ -55,34 +55,8 @@ const loop = async () => {
     })
 
 
-    tableRows.forEach(element => {
-        element.addEventListener('click', () => {
-            console.log(selectedRows);
-            
-            // po kliknieciu jest dodawana klasa selected do rowa tabeli i do 
-            // tablicy selectedRows jest dodawany id row'a
-            // a jesli row juz zawiera selected to zostaje usuniety z row'a i arraya
-            if(element.classList.contains("selected")){
-                element.classList.remove('selected')
-                //usuniecie z selectedRows danego id
-                selectedRows[0] = -1;
-
-            }else{
-                // u
-                tableRows.forEach( row => {
-                    if(row.classList.contains("selected")){
-                        row.classList.remove("selected")
-                    }
-                })
-                element.classList.add('selected')
-                selectedRows[0] = element.id;
-            
-            }
-        })
-    })
+    
 };
-
-loop()
 
 // Odswiezanie loopa
 const intervalId = setInterval(loop, 5000)
@@ -130,40 +104,7 @@ const tableGenerator = (data, selectedRows) => {
     let deviceId = 0;
 
     // html tabeli
-
-    let html = `
-        <table class="rounded">
-            <tr>
-                <th><div class="tableHead">
-                    <div class="text">Id</div>
-                    <img id = 'idId' src='../res/icons/sort/sort.png'></img>
-                </div></th>
-                <th><div class="tableHead">
-                    <div class="text">Name</div>
-                    <img id = 'idName' src='../res/icons/sort/sort.png'></img>
-                </div></th>
-                <th><div class="tableHead">
-                    <div class="text">Type</div>
-                    <img id = 'idType' src='../res/icons/sort/sort.png'></img>
-                </div></th>
-                <th><div class="tableHead">
-                    <div class="text">Serial Number</div>
-                    <img id = 'idSerialNumber' src='../res/icons/sort/sort.png'></img>
-                </div></th>
-                <th><div class="tableHead">
-                    <div class="text">Strength</div>
-                    <img id = 'idStrength' src='../res/icons/sort/sort.png'></img>
-                </div></th>
-                <th><div class="tableHead">
-                    <div class="text">Battery Level</div>
-                    <img id = 'idBatteryLevel' src='../res/icons/sort/sort.png'></img>
-                </div></th>
-                <th><div class="tableHead">
-                    <div class="text">Working Mode</div>
-                    <img id = 'idWorkingMode' src='../res/icons/sort/sort.png'></img>
-                </div></th>
-            </tr>
-    `;
+    let html = ``;
 
 
     // petla for po pobranym obiekcie z danymi
@@ -265,7 +206,68 @@ const tableGenerator = (data, selectedRows) => {
         deviceId++;
     });
 
-    html += '</table>'
-
     return html;
 }
+
+const calculateDistance = async (idArr) => {
+
+    idArr.forEach( id => {
+        if(id == -1){
+            console.log("Select Two Devices");
+            return "Select Two Devices"
+        }
+    })
+
+    console.log("git");
+
+    let data = await getData(server);
+    let xA,xB,yA,yB
+
+
+
+
+
+
+    return 0
+}
+
+const selectTableRows = () => {
+
+    let tableRows = document.querySelectorAll('.tableRow');
+
+    tableRows.forEach(element => {
+        element.addEventListener('click', () => {
+
+            calculateDistance(selectedRows);
+
+            // tutaj usuwamy zaznaczenie po kliknieciu na zaznaczony
+            if(element.classList.contains("selected")){
+                
+                element.classList.remove('selected');
+                // usuwanie id z selectedRows po odznaczeniu
+                const index = selectedRows.indexOf(element.id);
+                if (index > -1) {
+                    selectedRows.splice(index, 1);
+                }
+            } else {
+                //
+                if (selectedRows.length >= 2) {
+                    // jeśli mamy juz 2 zaznaczone usuwamy "najstarsze" zaznaczenie
+                    const oldestSelected = selectedRows.shift(); // usuwanie pierwszego elementu
+                    // wybiera wiersz z którego zostanie usunieta klasa selected
+                    const rowToDeselect = Array.from(tableRows).find(row => row.id === oldestSelected);
+                    if (rowToDeselect) {
+                        rowToDeselect.classList.remove('selected');
+                    }
+                }
+                // Zaznaczamy nowy wiersz i dodajemy jego ID do selectedRows
+                element.classList.add('selected');
+                selectedRows.push(element.id);
+            }
+        });
+    });
+}
+
+
+// inicjalizacja wszystkiego na starcie;
+loop()
