@@ -1,8 +1,10 @@
 const updateSelectedDevices = (id, remove = false) => {
+
     if(remove){
-        const index = selectedDevices.indexOf(id);
-        if (index > -1) {
-            selectedDevices.splice(index, 1);
+        for (let i = 0; i < selectedDevices.length; i++){
+            if(selectedDevices[i] == id){
+                selectedDevices.splice(i, 1);
+            }
         }
     }else {
         if(selectedDevices.length >= 2){
@@ -21,6 +23,8 @@ const rowSelected = () => {
     tableRows.forEach( row => {
         row.addEventListener('click', () => {
             if( row.classList.contains('selected')){
+                console.log(true);
+                console.log(row.id);
                 updateSelectedDevices(row.id, true)
             }else{
                 updateSelectedDevices(row.id);
