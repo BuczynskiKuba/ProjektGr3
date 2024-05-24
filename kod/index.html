@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,16 +9,17 @@
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/universal.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-    crossorigin=""/>
+        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+        crossorigin="" />
     <!-- Include Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-      integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-      crossorigin=""></script>
+        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+        crossorigin=""></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital@0;1&display=swap" rel="stylesheet">
 </head>
+
 <body>
     <main>
         <div class="left-side wrapper">
@@ -26,7 +28,9 @@
                     <h1>http:localhost:8080/radios</h1>
                 </div>
                 <div class="desc-text fn-trebuchet">
-                    <span class="text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel error, numquam officia hic, aperiam blanditiis impedit qui aliquam in odit maiores sequi necessitatibus corrupti? Sed numquam corrupti alias vel dolore.</span>
+                    <span class="text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel error, numquam
+                        officia hic, aperiam blanditiis impedit qui aliquam in odit maiores sequi necessitatibus
+                        corrupti? Sed numquam corrupti alias vel dolore.</span>
                 </div>
             </div>
             <div class="table">
@@ -34,56 +38,78 @@
                 <table>
                     <thead>
                         <tr>
-                            <th><div class="tableHead">
-                                <div class="text">Id</div>
-                                <div class="buttons">
-                                    <img id = 'Id' class="desc sort-button" src='res/icons/sort/sortDesc.png'></img>
-                                    <img id = 'Id' class="asc sort-button" src='res/icons/sort/sortAsc.png'></img>
+                            <th>
+                                <div class="tableHead">
+                                    <div class="text">Id</div>
+                                    <div class="buttons">
+                                        <img id='Id' class="desc sort-button" src='res/icons/sort/sortDesc.png'></img>
+                                        <img id='Id' class="asc sort-button" src='res/icons/sort/sortAsc.png'></img>
+                                    </div>
+
                                 </div>
-                                
-                            </div></th>
-                            <th><div class="tableHead">
-                                <div class="text">Name</div>
-                                <div class="buttons">
-                                    <img id = 'Id' class="desc sort-button" src='res/icons/sort/sortDesc.png'></img>
-                                    <img id = 'Id' class="asc sort-button" src='res/icons/sort/sortAsc.png'></img>
+                            </th>
+                            <th>
+                                <div class="tableHead">
+                                    <div class="text">Name</div>
+                                    <div class="buttons">
+                                        <img id='Id' class="desc sort-button" src='res/icons/sort/sortDesc.png'></img>
+                                        <img id='Id' class="asc sort-button" src='res/icons/sort/sortAsc.png'></img>
+                                    </div>
                                 </div>
-                            </div></th>
-                            <th><div class="tableHead">
-                                <div class="text">Type</div>
-                                <div class="buttons">
-                                    <img id = 'Type' class="desc sort-button" src='res/icons/sort/sortDesc.png'></img>
-                                    <img id = 'Type' class="asc sort-button" src='res/icons/sort/sortAsc.png'></img>
+                            </th>
+                            <th>
+                                <div class="tableHead">
+                                    <div class="text">Type</div>
+                                    <div class="buttons">
+                                        <img id='Type' class="desc sort-button" src='res/icons/sort/sortDesc.png'></img>
+                                        <img id='Type' class="asc sort-button" src='res/icons/sort/sortAsc.png'></img>
+                                    </div>
                                 </div>
-                            </div></th>
-                            <th><div class="tableHead">
-                                <div class="text">Serial Number</div>
-                                <div class="buttons">
-                                    <img id = 'SerialNumber' class="desc sort-button" src='res/icons/sort/sortDesc.png'></img>
-                                    <img id = 'SerialNumber' class="asc sort-button" src='res/icons/sort/sortAsc.png'></img>
+                            </th>
+                            <th>
+                                <div class="tableHead">
+                                    <div class="text">Serial Number</div>
+                                    <div class="buttons">
+                                        <img id='SerialNumber' class="desc sort-button"
+                                            src='res/icons/sort/sortDesc.png'></img>
+                                        <img id='SerialNumber' class="asc sort-button"
+                                            src='res/icons/sort/sortAsc.png'></img>
+                                    </div>
                                 </div>
-                            </div></th>
-                            <th><div class="tableHead">
-                                <div class="text">Strength</div>
-                                <div class="buttons">
-                                    <img id = 'Strength' class="desc sort-button" src='res/icons/sort/sortDesc.png'></img>
-                                    <img id = 'Strength' class="asc sort-button" src='res/icons/sort/sortAsc.png'></img>
+                            </th>
+                            <th>
+                                <div class="tableHead">
+                                    <div class="text">Strength</div>
+                                    <div class="buttons">
+                                        <img id='Strength' class="desc sort-button"
+                                            src='res/icons/sort/sortDesc.png'></img>
+                                        <img id='Strength' class="asc sort-button"
+                                            src='res/icons/sort/sortAsc.png'></img>
+                                    </div>
                                 </div>
-                            </div></th>
-                            <th><div class="tableHead">
-                                <div class="text">Battery Level</div>
-                                <div class="buttons">
-                                    <img id = 'BatteryLevel' class="desc sort-button" src='res/icons/sort/sortDesc.png'></img>
-                                    <img id = 'BatteryLevel' class="asc sort-button" src='res/icons/sort/sortAsc.png'></img>
+                            </th>
+                            <th>
+                                <div class="tableHead">
+                                    <div class="text">Battery Level</div>
+                                    <div class="buttons">
+                                        <img id='BatteryLevel' class="desc sort-button"
+                                            src='res/icons/sort/sortDesc.png'></img>
+                                        <img id='BatteryLevel' class="asc sort-button"
+                                            src='res/icons/sort/sortAsc.png'></img>
+                                    </div>
                                 </div>
-                            </div></th>
-                            <th><div class="tableHead">
-                                <div class="text">Working Mode</div>
-                                <div class="buttons">
-                                    <img id = 'WorkingMode' class="desc sort-button" src='res/icons/sort/sortDesc.png'></img>
-                                    <img id = 'WorkingMode' class="asc sort-button" src='res/icons/sort/sortAsc.png'></img>
+                            </th>
+                            <th>
+                                <div class="tableHead">
+                                    <div class="text">Working Mode</div>
+                                    <div class="buttons">
+                                        <img id='WorkingMode' class="desc sort-button"
+                                            src='res/icons/sort/sortDesc.png'></img>
+                                        <img id='WorkingMode' class="asc sort-button"
+                                            src='res/icons/sort/sortAsc.png'></img>
+                                    </div>
                                 </div>
-                            </div></th>
+                            </th>
                         </tr>
                     </thead>
                     <tbody></tbody>
@@ -100,7 +126,7 @@
             <ul>
                 <li>Jakub Batko</li>
                 <li>Mateusz Lis</li>
-                <li></li>
+                <li>Wojciech Osuch</li>
                 <li></li>
                 <li></li>
                 <li></li>
@@ -110,19 +136,22 @@
         <div class="otherinfo">
             <div class="info">Informacja o projekcie:</div>
             <span class="other">
-                Ta strona jest częścią niepublicznego projektu szkolnego. Wszystkie treści i materiały zamieszczone na tej stronie są przeznaczone wyłącznie do celów edukacyjnych i są własnością ich autorów. Kopiowanie, rozpowszechnianie lub wykorzystywanie materiałów bez zgody autorów jest zabronione.
+                Ta strona jest częścią niepublicznego projektu szkolnego. Wszystkie treści i materiały zamieszczone na
+                tej stronie są przeznaczone wyłącznie do celów edukacyjnych i są własnością ich autorów. Kopiowanie,
+                rozpowszechnianie lub wykorzystywanie materiałów bez zgody autorów jest zabronione.
             </span>
         </div>
     </footer>
     <!-- import wszystkich skryptów -->
     <script>
-        const scripts = ['calculateDistance.js', 'selectPoints.js' , 'getData.js', "icons.js", "map.js", "markers.js", "table.js", "main.js"];
-        
-        scripts.forEach( script => {
+        const scripts = ['calculateDistance.js', 'selectPoints.js', 'getData.js', "icons.js", "map.js", "markers.js", "table.js", "main.js"];
+
+        scripts.forEach(script => {
             const scriptElement = document.createElement('script');
             scriptElement.src = `js/${script}`;
             document.body.appendChild(scriptElement);
         })
     </script>
 </body>
+
 </html>
