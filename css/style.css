@@ -11,6 +11,10 @@
   --color-4: #2D3142;
   --color-5: #B0D7FF;
   font-family: "Montserrat", sans-serif;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  -webkit-user-drag: none;
 }
 
 body {
