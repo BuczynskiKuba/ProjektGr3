@@ -1,6 +1,13 @@
 const calculateDistance = () => {
 
-    if(selectedDevices.length == 2 && isLineShowed == false){
+    if (polyline) {
+        map.removeLayer(polyline);
+    }
+    if (distanceMarker) {
+        map.removeLayer(distanceMarker);
+    }
+
+    if(selectedDevices.length == 2){
         
         var pointA = L.latLng(data[parseInt(selectedDevices[0])].Position.Lat, data[parseInt(selectedDevices[0])].Position.Lon);
         var pointB = L.latLng(data[parseInt(selectedDevices[1])].Position.Lat, data[parseInt(selectedDevices[1])].Position.Lon);
@@ -23,19 +30,5 @@ const calculateDistance = () => {
                 html: '<button>Odległość: ' + distance + ' m</button>'
             })
         }).addTo(map);
-
-        isLineShowed = true
-
-    }else if (selectedDevices.length < 2 || isLineShowed == true){
-        // Jeśli istnieje już linia, usuń ją
-        if (polyline) {
-            map.removeLayer(polyline);
-        }
-        if (distanceMarker) {
-            map.removeLayer(distanceMarker);
-        }
-
-        isLineShowed = false
-        calculateDistance();
     }
 }

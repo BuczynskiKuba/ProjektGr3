@@ -126,6 +126,16 @@ main {
   padding: 15px;
 }
 
+.health button {
+  width: 20px;
+  height: 20px;
+  border: #1d1d1d 1px solid;
+  border-radius: 15px;
+  color: red;
+  background-color: red;
+  transform: translate(15px, -45px);
+}
+
 .marker-preview {
   position: absolute;
   z-index: 99;

@@ -27,6 +27,13 @@ class Marker {
             })
         }).addTo(this.map);
 
+        this.markerHealth = L.marker([this.lat, this.lon], {
+            icon: L.divIcon({
+                className: 'health',
+                html: '<button>I</button>'
+            })
+        }).addTo(map);
+
         this.marker.on('click', () => this.onClick());
     }
 
@@ -34,6 +41,7 @@ class Marker {
         this.lat = lat;
         this.lon = lon;
         this.marker.setLatLng([this.lat, this.lon]);
+        this.markerHealth.setLatLng([this.lat, this.lon]);
     }
 
     updateClicked(){

@@ -18,6 +18,7 @@ let data;
 let polyline = ''
 let distanceMarker = ''
 let isLineShowed = false
+let healthIndicators;
 
 // wykonuje sie tylko raz
 const init = async () => {
@@ -46,6 +47,8 @@ const loop = async () => {
 
     // pobranie elementów z html'
     tableRows = document.querySelectorAll('.tableRow');
+    healthIndicators = document.querySelectorAll('.health')
+
 
     sortButtonsASC.forEach(element =>{
         element.addEventListener('click', () => {
@@ -65,15 +68,8 @@ const loop = async () => {
 
     updateAllMarkers(data)
     rowSelected();
-
-    if (polyline) {
-        map.removeLayer(polyline);
-    }
-    if (distanceMarker) {
-        map.removeLayer(distanceMarker);
-    }
-
     calculateDistance();
+    
 };
 
 init();
