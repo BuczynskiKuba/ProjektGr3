@@ -15,7 +15,6 @@ const updateSelectedDevices = (id, remove = false) => {
         selectedDevices.push(id);
     }
 
-    console.log(selectedDevices);
     loop();
 }
 
@@ -23,8 +22,6 @@ const rowSelected = () => {
     tableRows.forEach( row => {
         row.addEventListener('click', () => {
             if( row.classList.contains('selected')){
-                console.log(true);
-                console.log(row.id);
                 updateSelectedDevices(row.id, true)
             }else{
                 updateSelectedDevices(row.id);

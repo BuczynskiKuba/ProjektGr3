@@ -15,6 +15,9 @@ let sortBy = "Id" // po jakim polu maja byc sortowane dane;
 let sortAsc = true;
 let tableRows;
 let data;
+let polyline = ''
+let distanceMarker = ''
+let isLineShowed = false
 
 // wykonuje sie tylko raz
 const init = async () => {
@@ -62,6 +65,15 @@ const loop = async () => {
 
     updateAllMarkers(data)
     rowSelected();
+
+    if (polyline) {
+        map.removeLayer(polyline);
+    }
+    if (distanceMarker) {
+        map.removeLayer(distanceMarker);
+    }
+
+    calculateDistance();
 };
 
 init();
