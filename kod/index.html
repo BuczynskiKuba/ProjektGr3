@@ -37,51 +37,51 @@
                             <th><div class="tableHead">
                                 <div class="text">Id</div>
                                 <div class="buttons">
-                                    <img id = 'Id' class="desc" src='../res/icons/sort/sortDesc.png'></img>
-                                    <img id = 'Id' class="asc" src='../res/icons/sort/sortAsc.png'></img>
+                                    <img id = 'Id' class="desc" src='res/icons/sort/sortDesc.png'></img>
+                                    <img id = 'Id' class="asc" src='res/icons/sort/sortAsc.png'></img>
                                 </div>
                                 
                             </div></th>
                             <th><div class="tableHead">
                                 <div class="text">Name</div>
                                 <div class="buttons">
-                                    <img id = 'Id' class="desc" src='../res/icons/sort/sortDesc.png'></img>
-                                    <img id = 'Id' class="asc" src='../res/icons/sort/sortAsc.png'></img>
+                                    <img id = 'Id' class="desc" src='res/icons/sort/sortDesc.png'></img>
+                                    <img id = 'Id' class="asc" src='res/icons/sort/sortAsc.png'></img>
                                 </div>
                             </div></th>
                             <th><div class="tableHead">
                                 <div class="text">Type</div>
                                 <div class="buttons">
-                                    <img id = 'Type' class="desc" src='../res/icons/sort/sortDesc.png'></img>
-                                    <img id = 'Type' class="asc" src='../res/icons/sort/sortAsc.png'></img>
+                                    <img id = 'Type' class="desc" src='res/icons/sort/sortDesc.png'></img>
+                                    <img id = 'Type' class="asc" src='res/icons/sort/sortAsc.png'></img>
                                 </div>
                             </div></th>
                             <th><div class="tableHead">
                                 <div class="text">Serial Number</div>
                                 <div class="buttons">
-                                    <img id = 'SerialNumber' class="desc" src='../res/icons/sort/sortDesc.png'></img>
-                                    <img id = 'SerialNumber' class="asc" src='../res/icons/sort/sortAsc.png'></img>
+                                    <img id = 'SerialNumber' class="desc" src='res/icons/sort/sortDesc.png'></img>
+                                    <img id = 'SerialNumber' class="asc" src='res/icons/sort/sortAsc.png'></img>
                                 </div>
                             </div></th>
                             <th><div class="tableHead">
                                 <div class="text">Strength</div>
                                 <div class="buttons">
-                                    <img id = 'Strength' class="desc" src='../res/icons/sort/sortDesc.png'></img>
-                                    <img id = 'Strength' class="asc" src='../res/icons/sort/sortAsc.png'></img>
+                                    <img id = 'Strength' class="desc" src='res/icons/sort/sortDesc.png'></img>
+                                    <img id = 'Strength' class="asc" src='res/icons/sort/sortAsc.png'></img>
                                 </div>
                             </div></th>
                             <th><div class="tableHead">
                                 <div class="text">Battery Level</div>
                                 <div class="buttons">
-                                    <img id = 'BatteryLevel' class="desc" src='../res/icons/sort/sortDesc.png'></img>
-                                    <img id = 'BatteryLevel' class="asc" src='../res/icons/sort/sortAsc.png'></img>
+                                    <img id = 'BatteryLevel' class="desc" src='res/icons/sort/sortDesc.png'></img>
+                                    <img id = 'BatteryLevel' class="asc" src='res/icons/sort/sortAsc.png'></img>
                                 </div>
                             </div></th>
                             <th><div class="tableHead">
                                 <div class="text">Working Mode</div>
                                 <div class="buttons">
-                                    <img id = 'WorkingMode' class="desc" src='../res/icons/sort/sortDesc.png'></img>
-                                    <img id = 'WorkingMode' class="asc" src='../res/icons/sort/sortAsc.png'></img>
+                                    <img id = 'WorkingMode' class="desc" src='res/icons/sort/sortDesc.png'></img>
+                                    <img id = 'WorkingMode' class="asc" src='res/icons/sort/sortAsc.png'></img>
                                 </div>
                             </div></th>
                         </tr>
@@ -94,8 +94,16 @@
             <div id="map"></div>
         </div>
     </main>
-    <script src="icons.js"></script>
-    <script src="map.js"></script>
-    <script src="script.js" async></script>
+
+    <!-- import wszystkich skryptów -->
+    <script>
+        const scripts = ['calculateDistance.js', 'selectPoints.js' , 'getData.js', "icons.js", "map.js", "markers.js", "table.js", "main.js"];
+        
+        scripts.forEach( script => {
+            const scriptElement = document.createElement('script');
+            scriptElement.src = `js/${script}`;
+            document.body.appendChild(scriptElement);
+        })
+    </script>
 </body>
 </html>
