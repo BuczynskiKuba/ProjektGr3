@@ -30,6 +30,12 @@
                 </div>
             </div>
             <div class="table">
+                <div class="options">
+                    <label>
+                        <input type="checkbox" name="add-unauthorized" id="add-unauthorized">
+                        Add unauthorized device
+                    </label>
+                </div>
                 <!-- tu będzie tabelka -->
                 <table>
                     <thead>
@@ -116,7 +122,7 @@
     </footer>
     <!-- import wszystkich skryptów -->
     <script>
-        const scripts = ['selectPoints.js' , 'getData.js', "icons.js", "map.js", "markers.js", "table.js", 'calculateDistance.js' ,"main.js"];
+        const scripts = ['selectPoints.js' , 'getData.js', "icons.js", "map.js", "markers.js", "table.js", 'calculateDistance.js', "main.js"];
         
         scripts.forEach( script => {
             const scriptElement = document.createElement('script');

@@ -36,6 +36,8 @@ const tableGenerator = (data, selectedRows) => {
             case "BaseStation":
                 type = "res/icons/type/basestation.png";
                 break
+            default:
+                type = 'res/icons/mapIcons/unknownmarkerclicked.png'
         }
         // addMarker(element.Position, example);
         // addMarkerGeneric(markerPosition)

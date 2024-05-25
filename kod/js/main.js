@@ -10,15 +10,21 @@ let server = 'http://localhost:8080/radios/'
 let selectedDevices = [];
 let markers = []; //tej tablicy użyjemy do czyszczenia danych
 let distances = []
-let selectedRowID = 0;
 let sortBy = "Id" // po jakim polu maja byc sortowane dane; 
-let sortAsc = true;
-let tableRows;
-let data;
-let polyline = ''
-let distanceMarker = ''
-let isLineShowed = false
-let healthIndicators;
+let sortAsc = true; // sortowanie rosnące
+let tableRows; // wiersze w tabeli
+let data; // dane pobrane z api;
+let polyline = '' // linia prota miedzy punktami
+let distanceMarker = '' // marker wyswietlajacy odleglosc miedzy punktami
+let isLineShowed = false // 
+let healthIndicators = []; // health status of devices array
+
+// unAuthorizedDevice
+let polylineToClosest1 = null;
+let polylineToClosest2 = null;
+let distanceMarker1 = null;
+let distanceMarker2 = null;
+
 
 // wykonuje sie tylko raz
 const init = async () => {
@@ -39,6 +45,23 @@ const init = async () => {
 // taki Main, tutaj sie wykonuja rzeczy w petli co 10s
 const loop = async () => {
 
+    let unauthorizedDevice = document.querySelector('#add-unauthorized')
+
+    if(unauthorizedDevice.checked){
+        data[8] = {
+            Id: 9,
+            Name: "",
+            Type: 'Other',
+            SerialNumber: '0000-0000-0000-00000',
+            Strength: 11,
+            BatteryLevel: 110,
+            WorkingMode: 'Data',
+            Position: {
+                Lat: '50.07996341511315',
+                Lon: '19.99437782671384' 
+            }
+        } 
+    }
 
     let sortedData = sortByField(data.slice(), sortBy, sortAsc);
     // dodawanie tabeli do html'a 
@@ -47,8 +70,8 @@ const loop = async () => {
 
     // pobranie elementów z html'
     tableRows = document.querySelectorAll('.tableRow');
-    healthIndicators = document.querySelectorAll('.health')
 
+    healthIndicators = document.querySelectorAll('.health')
 
     sortButtonsASC.forEach(element =>{
         element.addEventListener('click', () => {
@@ -66,10 +89,10 @@ const loop = async () => {
         })
     })
 
+
     updateAllMarkers(data)
     rowSelected();
     calculateDistance();
-    
 };
 
 init();

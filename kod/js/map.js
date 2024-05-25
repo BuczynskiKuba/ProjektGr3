@@ -8,7 +8,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 class Marker {
 
-    constructor(lat, lon, icon, iconClicked, elementId, elementName) {
+    constructor(lat, lon, icon, iconClicked, elementId, elementName, elementBattery, elementStrength) {
         this.map = map;
         this.lat = lat;
         this.lon = lon;
@@ -17,6 +17,10 @@ class Marker {
         this.clicked = false;
         this.elementId = elementId;
         this.elementName = elementName;
+        this.elementBattery = elementBattery;
+        this.elementStrength = elementStrength;
+        this.markerHealth = null;
+
 
         this.marker = L.marker([this.lat, this.lon], {
             icon: L.icon({
@@ -27,12 +31,7 @@ class Marker {
             })
         }).addTo(this.map);
 
-        this.markerHealth = L.marker([this.lat, this.lon], {
-            icon: L.divIcon({
-                className: 'health',
-                html: '<button>I</button>'
-            })
-        }).addTo(map);
+        this.setHealth(this.elementBattery, this.elementStrength);
 
         this.marker.on('click', () => this.onClick());
     }
@@ -46,18 +45,18 @@ class Marker {
 
     updateClicked(){
 
-        let clicked = false;
+        this.clicked = false;
 
         for( let i = 0; i < selectedDevices.length; i++){
             if (selectedDevices[i] == this.elementId){
                 this.clicked = true
                 this.setIcon(this.iconClicked)
-                clicked = true;
+                this.clicked = true;
                 break;
             }
         }
 
-        if(clicked == false){
+        if(this.clicked == false){
             this.clicked = false
             this.setIcon(this.icon)
         }
@@ -74,10 +73,6 @@ class Marker {
     }
 
     onClick() {
-        // Placeholder for click handling logic.
-        console.log('Marker clicked: ', this.elementName );
-        // Example: Change icon on click
-
         if(this.clicked){
             this.clicked = false;
             this.setIcon(this.icon)
@@ -88,5 +83,55 @@ class Marker {
             updateSelectedDevices(this.elementId);
         }
 
+    }
+
+    setHealth(elementBattery, elementStrength) {
+
+        this.elementBattery = elementBattery;
+        this.elementStrength = elementStrength;
+
+        if (this.markerHealth){
+            map.removeLayer(this.markerHealth)
+        }
+
+        let health = 0;
+
+        health += this.elementBattery * 0.5;
+        health += this.elementStrength * 5;
+
+        if( health >= 0 && health < 30){
+            this.markerHealth = L.marker([this.lat, this.lon], {
+                icon: L.divIcon({
+                    className: 'health',
+                    html: '<button style ="color: red; background-color: red;" >I</button>'
+                })
+            }).addTo(this.map);
+        }else if (health >= 30 && health < 70){
+            this.markerHealth = L.marker([this.lat, this.lon], {
+                icon: L.divIcon({
+                    className: 'health',
+                    html: '<button style ="color: yellow; background-color: yellow;" >I</button>'
+                })
+            }).addTo(this.map);
+        }else if (health >= 70 && health <= 100){
+            this.markerHealth = L.marker([this.lat, this.lon], {
+                icon: L.divIcon({
+                    className: 'health',
+                    html: '<button style ="color: green; background-color: green;" >I</button>'
+                })
+            }).addTo(this.map);
+        }else{
+            this.markerHealth = L.marker([this.lat, this.lon], {
+                icon: L.divIcon({
+                    className: 'health',
+                    html: '<button style ="color: gray; background-color: gray;" >I</button>'
+                })
+            }).addTo(this.map);
+        }
+    }
+
+    destroyMarker(){
+        map.removeLayer(this.marker)
+        map.removeLayer(this.markerHealth)
     }
 }

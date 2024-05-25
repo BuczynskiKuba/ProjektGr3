@@ -9,8 +9,8 @@ const calculateDistance = () => {
 
     if(selectedDevices.length == 2){
         
-        var pointA = L.latLng(data[parseInt(selectedDevices[0])].Position.Lat, data[parseInt(selectedDevices[0])].Position.Lon);
-        var pointB = L.latLng(data[parseInt(selectedDevices[1])].Position.Lat, data[parseInt(selectedDevices[1])].Position.Lon);
+        let pointA = L.latLng(data[parseInt(selectedDevices[0])].Position.Lat, data[parseInt(selectedDevices[0])].Position.Lon);
+        let pointB = L.latLng(data[parseInt(selectedDevices[1])].Position.Lat, data[parseInt(selectedDevices[1])].Position.Lon);
 
         // Linia pomiedzy punktami
         polyline = L.polyline([pointA, pointB], {color: '#707070'}).addTo(map);
@@ -24,6 +24,7 @@ const calculateDistance = () => {
             (pointA.lng + pointB.lng) / 2
         );
 
+        // tworzy tabliczke z pokazana odlegloscia
         distanceMarker = L.marker(midpoint, {
             icon: L.divIcon({
                 className: 'distance-label',
