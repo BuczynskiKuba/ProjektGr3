@@ -152,14 +152,14 @@ const updateAllMarkers = (data) => {
             distanceMarker1 = L.marker(midpoint1, {
                 icon: L.divIcon({
                     className: 'distance-label',
-                    html: '<button>Odległość: ' + distance1 + ' m</button>'
+                    html: '<button>Distance: ' + distance1 + ' m</button>'
                 })
             }).addTo(map);
 
             distanceMarker2 = L.marker(midpoint2, {
                 icon: L.divIcon({
                     className: 'distance-label',
-                    html: '<button>Odległość: ' + distance2 + ' m</button>'
+                    html: '<button>Distance: ' + distance2 + ' m</button>'
                 })
             }).addTo(map);
     
@@ -179,7 +179,6 @@ const updateAllMarkers = (data) => {
     })
 
 }
-
 
 const clearMarkers = () => {
     markers.forEach(marker => marker.destroyMarker());

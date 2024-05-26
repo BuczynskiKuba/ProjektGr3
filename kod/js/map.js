@@ -1,5 +1,5 @@
 // Initialize the map
-const map = L.map('map').setView([50.0276, 19.9821], 11);
+const map = L.map('map').setView([50.0476, 19.9510], 12);
 
 // Add OpenStreetMap tile layer
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {

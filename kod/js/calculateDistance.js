@@ -28,7 +28,7 @@ const calculateDistance = () => {
         distanceMarker = L.marker(midpoint, {
             icon: L.divIcon({
                 className: 'distance-label',
-                html: '<button>Odległość: ' + distance + ' m</button>'
+                html: '<button>Distance: ' + distance + ' m</button>'
             })
         }).addTo(map);
     }
