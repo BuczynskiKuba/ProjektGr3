@@ -22,10 +22,11 @@ body {
 }
 
 main {
-  width: inherit;
+  width: 100vw;
   min-height: 100vh;
   display: flex;
   background-color: var(--color-4);
+  justify-content: center;
   align-items: center;
 }
 
@@ -37,14 +38,35 @@ main {
 .left-side {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 90vh;
+}
+.left-side .options {
+  display: flex;
+  justify-content: center;
+  margin: 1vh 1vw;
+}
+.left-side .options label {
+  border: #1d1d1d solid 3px;
+  border-radius: 15px;
+  padding: 1vh 1vw;
+  text-align: center;
+  font-weight: bold;
+  color: var(--color-4);
+  background-color: var(--color-2);
+  box-shadow: 8px 8px 24px 0px rgb(29, 29, 29);
+}
+
+.right-side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 90vh;
 }
 
 .title {
   width: 100%;
-  height: 25%;
+  height: 10vh;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -65,24 +87,11 @@ main {
 
 .table {
   width: clamp(500px, 80%, 1000px);
+  max-height: 90vh;
   display: flex;
   justify-content: center;
   flex-direction: column;
-}
-.table .options {
-  display: flex;
-  justify-content: center;
-  margin: 1vh 1vw;
-}
-.table .options label {
-  border: #1d1d1d solid 3px;
-  border-radius: 15px;
-  padding: 1vh 1vw;
-  text-align: center;
-  font-weight: bold;
-  color: var(--color-4);
-  background-color: var(--color-2);
-  box-shadow: 8px 8px 24px 0px rgb(29, 29, 29);
+  overflow-y: auto;
 }
 .table table {
   box-shadow: 8px 8px 24px 0px rgb(29, 29, 29);
@@ -120,9 +129,10 @@ main {
 }
 
 #map {
-  height: 90vh;
+  height: 80vh;
   width: 40vw;
   margin: 5vh 5vw;
+  margin-top: 0;
   border: var(--color-1) 5px solid;
   box-shadow: 8px 8px 24px 0px rgb(29, 29, 29);
   border-radius: 20px;

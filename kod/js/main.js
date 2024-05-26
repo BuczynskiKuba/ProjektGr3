@@ -1,22 +1,18 @@
-// pobranie z html diva o klasie .table gdzie wrzuca sie tabela
+// pobranie elementów z html'a które sie nie zmieniają
 const tbody = document.querySelector('.table table tbody');
 let sortButtonsASC = document.querySelectorAll('.asc')
 let sortButtonsDESC = document.querySelectorAll('.desc')
 
-// aktualnie zaznaczone row'y
-// gdyz tabela co 10s sie odswieza dlatego trzeba zapisac co bylo
-// klikniete
-let server = 'http://localhost:8080/radios/'
-let selectedDevices = [];
-let markers = []; //tej tablicy użyjemy do czyszczenia danych
-let distances = []
-let sortBy = "Id" // po jakim polu maja byc sortowane dane; 
-let sortAsc = true; // sortowanie rosnące
+let server = 'http://localhost:8080/radios/' // adres z którego są pobierane dane
+let selectedDevices = []; // tablica przechowuje ID wybranych urządeń
+let markers = []; // tablica aktualnie wyświetlanych markerów
+let sortBy = "Id" // po jakim polu maja byc sortowane dane, domyslnie po ID; 
+let sortAsc = true; // sortowanie rosnące, domyślnie rosnące;
 let tableRows; // wiersze w tabeli
 let data; // dane pobrane z api;
 let polyline = '' // linia prota miedzy punktami
 let distanceMarker = '' // marker wyswietlajacy odleglosc miedzy punktami
-let isLineShowed = false // 
+let isLineShowed = false // zmienna pomocnicza informujaca o tym czy linia miedzy elementami jest pokazana;
 let healthIndicators = []; // health status of devices array
 
 // unAuthorizedDevice
@@ -33,7 +29,25 @@ const init = async () => {
     // odpalenie wszystkiego na wstepie
     loop();
 
-    // Odswiezanie loopa
+    // dodanie eventListenerów do przycisków sortowania danych
+
+    sortButtonsASC.forEach(element =>{
+        element.addEventListener('click', () => {
+            sortBy = element.id    
+            sortAsc = true;
+            loop()
+        })
+    })
+
+    sortButtonsDESC.forEach(element =>{
+        element.addEventListener('click', () => {
+            sortBy = element.id
+            sortAsc = false;
+            loop()
+        })
+    })
+
+    // Odswiezanie loopa i pobierania danych
     const intervalgetData = setInterval(async () => {
         data = await getData(server)
         loop();
@@ -42,7 +56,7 @@ const init = async () => {
 }
 
 
-// taki Main, tutaj sie wykonuja rzeczy w petli co 10s
+// taki Main, tutaj sie wykonuja rzeczy w petli co 5s
 const loop = async () => {
 
     let unauthorizedDevice = document.querySelector('#add-unauthorized')
@@ -63,35 +77,20 @@ const loop = async () => {
         } 
     }
 
+    // tworzenie klona posortowanych danych dla tabeli
     let sortedData = sortByField(data.slice(), sortBy, sortAsc);
     // dodawanie tabeli do html'a 
     tbody.innerHTML = tableGenerator(sortedData, selectedDevices)
-    // dodawanie markerów na mapę
 
     // pobranie elementów z html'
     tableRows = document.querySelectorAll('.tableRow');
-
     healthIndicators = document.querySelectorAll('.health')
 
-    sortButtonsASC.forEach(element =>{
-        element.addEventListener('click', () => {
-            sortBy = element.id    
-            sortAsc = true;
-            loop()
-        })
-    })
-
-    sortButtonsDESC.forEach(element =>{
-        element.addEventListener('click', () => {
-            sortBy = element.id
-            sortAsc = false;
-            loop()
-        })
-    })
-
-
+    // aktualizacja markerów
     updateAllMarkers(data)
+    // aktualizacja wybranych urządzeń
     rowSelected();
+    // obliczenie dystansu miedzy punktami jesli sa 2 wybrane urzadzenia
     calculateDistance();
 };
 
