@@ -1,3 +1,7 @@
+/*
+    calculateDistance() - funkcja oblicza odległość miedzy dwoma punktami na mapie i wyświetla linie prostą miedzy nimi i tabliczke z odległościa
+*/
+
 const calculateDistance = () => {
 
     if (polyline) {

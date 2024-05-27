@@ -1,3 +1,10 @@
+/*
+    updateSelected() - fukncja aktualizuje obecnie zaznaczone urządzenia i wywołuje funkcje które zmieniaja stan wierszy i markerów w zależności od wartości zmiennej selectedDevices()
+    na końcu odświeża strone za pomocą loop();
+    (id) - id wiersza do zaznaczenia lub odznaczenia
+    (remove) - czy usuwamy zaznacznie domyślnie false
+*/
+
 const updateSelectedDevices = (id, remove = false) => {
 
     if(remove){
@@ -18,6 +25,9 @@ const updateSelectedDevices = (id, remove = false) => {
     loop();
 }
 
+/*
+   rowSelected() - dodaje eventListenery na każdy wiersz tabeli, po kliknieciu jest wywyłana funckja updateSelected() 
+*/
 const rowSelected = () => {
     tableRows.forEach( row => {
         row.addEventListener('click', () => {

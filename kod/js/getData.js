@@ -1,4 +1,8 @@
-// pobieranie danych z API
+/**
+ * getData() - funckja asynchroniczna pobiera dane z podanego adresu serwera (url)
+ * url - adres serwera
+ * return - funkcja zwraca pobrane dane jęsli nie wystąpił żaden bład, inaczej wypisuje do konsoli kod błedu i informacje o nim 
+ */
 const getData = async (url) => {
     try {
         const response = await fetch(url);

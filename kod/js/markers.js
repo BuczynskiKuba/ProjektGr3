@@ -1,36 +1,11 @@
-//generator markerów
-const markersGenerator = (data) => {
-    clearMarkers();
-    data.forEach(element => {
-        var elementPos = [element.Position.Lat, element.Position.Lon]
-        let icon;
-        let iconClicked;
-        switch(element.Type){
-            case "Portable":
-                icon = 'res/icons/mapIcons/portablemarker.png';
-                iconClicked = 'res/icons/mapIcons/portablemarkerclicked.png';
-                break;
-            case "Car":
-                icon = 'res/icons/mapIcons/carmarker.png';
-                iconClicked = 'res/icons/mapIcons/carmarkerclicked.png';
-                break;
-            case "BaseStation":
-                icon = 'res/icons/mapIcons/basestationmarker.png';
-                iconClicked = 'res/icons/mapIcons/basestationmarkerclicked.png';
-                break;
-            default:
-                    icon = 'res/icons/mapIcons/unknownmarker.png'
-                    iconClicked = 'res/icons/mapIcons/unknownmarkerclicked.png'
-                    break;
-        }
-        // marker = addMarker(elementPos, icon, iconClicked, selectedRows, element.Id, element.Name);
-        //marker = new Marker(elementPos, icon, iconClicked, element.Id - 1, element.Name)
-        const marker = new Marker(elementPos[0], elementPos[1] , icon, iconClicked, element.Id - 1, element.Name, element.BatteryLevel, element.Strength);
-        markers.push(marker)
-    })
-    //console.log(markers);
-    return markers;
-}
+/*
+    updateAllMarkers() - funkcja aktualizuje markery, jeśli dany marker nie ma swojego odpowiednika w danych jest usuwany,
+                        jeśli dane nie maja swojego odpowiednika w postaci markera ten jest dodawany,
+                        dodatkowo jest aktualizowana pozycja markerów, zdrowie, i status zaznaczenia
+
+    (data) - dane na podstawie których są tworzone markery
+
+*/
 const updateAllMarkers = (data) => {
     
     // sprawdza czy kazda rekord ma swoj marker
@@ -180,6 +155,11 @@ const updateAllMarkers = (data) => {
 
 }
 
+/*
+
+    clearMarkers() - funckja usuwa wszystkie markery i zeruje tablice markers[]
+
+*/
 const clearMarkers = () => {
     markers.forEach(marker => marker.destroyMarker());
     markers = [];

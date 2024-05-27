@@ -1,7 +1,7 @@
 // pobranie elementów z html'a które sie nie zmieniają
-const tbody = document.querySelector('.table table tbody');
-let sortButtonsASC = document.querySelectorAll('.asc')
-let sortButtonsDESC = document.querySelectorAll('.desc')
+const tbody = document.querySelector('.table table tbody'); // ciało tabeli gdzie jest wrzucany kod html z wygenerowana tabela
+let sortButtonsASC = document.querySelectorAll('.asc') // przycisk do sortowania
+let sortButtonsDESC = document.querySelectorAll('.desc') // przycisk do sortowania
 
 let server = 'http://localhost:8080/radios/' // adres z którego są pobierane dane
 let selectedDevices = []; // tablica przechowuje ID wybranych urządeń
@@ -22,7 +22,11 @@ let distanceMarker1 = null;
 let distanceMarker2 = null;
 
 
-// wykonuje sie tylko raz
+/**
+ * init() - funkcja asynchroniczna, wykonuje sie raz po załadowaniu strony
+ *          jest w ustawianie częstotliwości pobierania danych i odświeżania loop()
+ *          dodatkowo są w niej ustawiane wartości wymagające ustawienia tylko raz
+ */
 const init = async () => {
     data = await getData(server);
 
@@ -52,11 +56,12 @@ const init = async () => {
         data = await getData(server)
         loop();
     }, 5000)
-    markersGenerator(data)
 }
 
 
-// taki Main, tutaj sie wykonuja rzeczy w petli co 5s
+/**
+ * loop() - funckja asynchroniczna gdzie strona odświeża swoją zawartość co określoną ilośc sekund
+ */
 const loop = async () => {
 
     let unauthorizedDevice = document.querySelector('#add-unauthorized')

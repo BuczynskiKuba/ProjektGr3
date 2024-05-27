@@ -1,3 +1,11 @@
+/*
+tableGenerator - tworzy kolejne wiersze tabeli na podstawie otrzymanych danych (data) i zwraca kod html z gotowa tabela
+(data) - dane na podstawie których są tworzone wiersze
+(selectedRows) - wybrane wiersze, po aktualizacji danych tabela sie odswieza i na podstawie tej zmiennej tworzy juz zaznaczone wiersze
+return - zwraca kod html z tabelą
+*/
+
+
 const tableGenerator = (data, selectedRows) => {
     // html tabeli
     let html = ``;
@@ -104,6 +112,15 @@ const tableGenerator = (data, selectedRows) => {
 
     return html;
 }
+
+/*
+sortByField - sortuje dane przekazane do zmiennej (array) i sortuje je po wybranym polu (field) dodatkowo może sortować rosnąca i malejąca
+(array) - tablica danych przekazana do sortowania
+(field) - pole po którym odbywa sie sortowanie
+(ascending) - domyślnie true, sortowanie malejące/rosnące
+return - zwraca posortowane dane
+*/
+
 const sortByField = (array, field, ascending = true) => {
     ascending != ascending // nie chce mi sie podmieniac icon żeby sie zgadzało
 
